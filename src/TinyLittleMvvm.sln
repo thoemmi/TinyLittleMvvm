@@ -1,14 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm", "TinyLittleMvvm\TinyLittleMvvm.csproj", "{091A6BAA-E90D-4701-B7AF-254FC289AB26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm.Demo", "TinyLittleMvvm.Demo\TinyLittleMvvm.Demo.csproj", "{C22346CA-AA21-4D09-963A-0243B20A096B}"
+EndProject
 Global
-	GlobalSection(CodealikeProperties) = postSolution
-		SolutionGuid = 78c34d1c-5700-467f-baec-2ec025902b80
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -18,8 +17,15 @@ Global
 		{091A6BAA-E90D-4701-B7AF-254FC289AB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{091A6BAA-E90D-4701-B7AF-254FC289AB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{091A6BAA-E90D-4701-B7AF-254FC289AB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22346CA-AA21-4D09-963A-0243B20A096B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22346CA-AA21-4D09-963A-0243B20A096B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22346CA-AA21-4D09-963A-0243B20A096B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22346CA-AA21-4D09-963A-0243B20A096B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		SolutionGuid = 78c34d1c-5700-467f-baec-2ec025902b80
 	EndGlobalSection
 EndGlobal
