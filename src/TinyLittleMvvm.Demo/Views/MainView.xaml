@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow 
+﻿<Controls:MetroWindow
   x:Class="TinyLittleMvvm.Demo.Views.MainView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +10,12 @@
   GlowBrush="{DynamicResource AccentColorBrush}"
   UseLayoutRounding="True"
   Title="{Binding Title}" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
-    <Grid>
-        
-    </Grid>
+  <StackPanel>
+
+    <Button
+      Command="{Binding ShowSampleDialogCommand}"
+      Content="Show sample dialog"
+      Width="200" Margin="10"/>
+
+  </StackPanel>
 </Controls:MetroWindow>

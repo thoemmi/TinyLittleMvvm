@@ -62,6 +62,7 @@ namespace TinyLittleMvvm {
             var builder = new ContainerBuilder();
 
             builder.RegisterType<WindowManager>().SingleInstance();
+            builder.RegisterType<DialogManager>().AsImplementedInterfaces().SingleInstance();
 
             ConfigureContainer(builder);
 

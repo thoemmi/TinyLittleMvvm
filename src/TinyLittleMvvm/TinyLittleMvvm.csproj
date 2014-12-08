@@ -58,6 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
+    <Compile Include="DialogManager.cs" />
+    <Compile Include="DialogViewModel.cs" />
+    <Compile Include="IDialogManager.cs" />
+    <Compile Include="IDialogViewModel.cs" />
     <Compile Include="IOnClosingHandler.cs" />
     <Compile Include="IOnLoadedHandler.cs" />
     <Compile Include="IUiExecution.cs" />
