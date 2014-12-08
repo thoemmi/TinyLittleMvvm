@@ -8,9 +8,11 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         private string _text;
 
         public SampleDialogViewModel() {
-            _okCommand = new RelayCommand(OnOk);
+            _okCommand = new RelayCommand(OnOk, CanOk);
             _cancelCommand = new RelayCommand(OnCancel);
             _text = String.Empty;
+
+            AddValidationRule(() => Text, text => !String.IsNullOrEmpty(text), "Text must not be empty");
         }
 
         public string Text {
@@ -29,6 +31,10 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         public ICommand CancelCommand {
             get { return _cancelCommand; }
+        }
+
+        private bool CanOk() {
+            return ValidateAllRules();
         }
 
         private void OnOk() {

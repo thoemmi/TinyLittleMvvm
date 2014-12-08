@@ -27,7 +27,7 @@
       Margin="0 4"/>
     <TextBox
       Grid.Row="0" Grid.Column="1"
-      Text="{Binding Text}"
+      Text="{Binding Text, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
       Margin="0 5"/>
 
     <StackPanel
