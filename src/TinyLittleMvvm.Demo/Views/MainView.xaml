@@ -1,15 +1,15 @@
 ﻿<Controls:MetroWindow 
-  x:Class="TinyLittleMvvm.Demo.MainWindow"
+  x:Class="TinyLittleMvvm.Demo.Views.MainView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:local="clr-namespace:TinyLittleMvvm.Demo"
   xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:ViewModels="clr-namespace:TinyLittleMvvm.Demo.ViewModels"
   mc:Ignorable="d"
   GlowBrush="{DynamicResource AccentColorBrush}"
   UseLayoutRounding="True"
-  Title="Tiny Little MVVM Demo" Height="350" Width="525">
+  Title="{Binding Title}" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
     <Grid>
         
     </Grid>
