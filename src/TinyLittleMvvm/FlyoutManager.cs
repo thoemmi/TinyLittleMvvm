@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
+using Autofac;
 using MahApps.Metro.Controls;
 
 namespace TinyLittleMvvm {
@@ -11,7 +12,19 @@ namespace TinyLittleMvvm {
             return viewModel.Task;
         }
 
+        public Task ShowFlyout<TViewModel>() where TViewModel : DialogViewModel {
+            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            ShowFlyoutInternal(viewModel);
+            return viewModel.Task;
+        }
+
         public Task<TResult> ShowFlyout<TResult>(DialogViewModel<TResult> viewModel) {
+            ShowFlyoutInternal(viewModel);
+            return viewModel.Task;
+        }
+
+        public Task<TResult> ShowFlyout<TViewModel, TResult>() where TViewModel : DialogViewModel<TResult> {
+            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
             ShowFlyoutInternal(viewModel);
             return viewModel.Task;
         }

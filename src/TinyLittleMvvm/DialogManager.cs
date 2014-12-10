@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -26,6 +27,11 @@ namespace TinyLittleMvvm {
             await firstMetroWindow.HideMetroDialogAsync(dialog);
         }
 
+        public Task ShowDialogAsync<TViewModel>() where TViewModel : DialogViewModel {
+            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            return ShowDialogAsync(viewModel);
+        }
+
         public async Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel) {
             var view = ViewLocator.GetViewForViewModel(viewModel);
 
@@ -45,6 +51,11 @@ namespace TinyLittleMvvm {
             await firstMetroWindow.HideMetroDialogAsync(dialog);
 
             return result;
+        }
+
+        public Task<TResult> ShowDialogAsync<TViewModel, TResult>() where TViewModel : DialogViewModel<TResult> {
+            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            return ShowDialogAsync(viewModel);
         }
 
         public Task<MessageDialogResult> ShowMessageBox(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null) {

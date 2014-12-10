@@ -45,14 +45,14 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
 
         private async Task OnShowSampleDialogAsync() {
-            var text = await _dialogManager.ShowDialogAsync(new SampleDialogViewModel());
+            var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string>();
             if (text != null) {
                 await _dialogManager.ShowMessageBox(Title, "You entered: " + text);
             }
         }
  
         private Task OnShowSampleFlyoutAsync() {
-            return _flyoutManager.ShowFlyout(new SampleFlyoutViewModel());
+            return _flyoutManager.ShowFlyout<SampleFlyoutViewModel>();
         }
     }
 }
