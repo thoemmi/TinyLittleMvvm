@@ -10,11 +10,21 @@
   GlowBrush="{DynamicResource AccentColorBrush}"
   UseLayoutRounding="True"
   Title="{Binding Title}" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
+
+  <Controls:MetroWindow.Flyouts>
+    <Controls:FlyoutsControl ItemsSource="{Binding Flyouts}" />
+  </Controls:MetroWindow.Flyouts>
+
   <StackPanel>
 
     <Button
       Command="{Binding ShowSampleDialogCommand}"
       Content="Show sample dialog"
+      Width="200" Margin="10"/>
+
+    <Button
+      Command="{Binding ShowSampleFlyoutCommand}"
+      Content="Show sample flyout"
       Width="200" Margin="10"/>
 
   </StackPanel>

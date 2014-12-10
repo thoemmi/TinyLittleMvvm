@@ -35,7 +35,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
 
         private bool CanOk() {
-            return HasErrors;
+            return !HasErrors;
         }
 
         private void OnOk() {

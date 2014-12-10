@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SampleDialogViewModel.cs" />
+    <Compile Include="ViewModels\SampleFlyoutViewModel.cs" />
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +74,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\SampleDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SampleFlyoutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
