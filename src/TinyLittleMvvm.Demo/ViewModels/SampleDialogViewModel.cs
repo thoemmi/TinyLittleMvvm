@@ -20,6 +20,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             set {
                 if (_text != value) {
                     _text = value;
+                    ValidateAllRules();
                     NotifyOfPropertyChange(() => Text);
                 }
             }
@@ -34,7 +35,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
 
         private bool CanOk() {
-            return ValidateAllRules();
+            return HasErrors;
         }
 
         private void OnOk() {
