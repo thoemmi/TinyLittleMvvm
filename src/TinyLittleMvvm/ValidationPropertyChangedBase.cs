@@ -16,7 +16,7 @@ namespace TinyLittleMvvm {
         }
 
         protected void AddValidationRule<TProperty>(Expression<Func<TProperty>> property, Func<TProperty, bool> validate, string errorMsg) {
-            var propertyName = GetMemberName(property);
+            var propertyName = ExpressionHelper.GetMemberName(property);
 
             var rule = new ValidationRule {
                 ErrorMessage = errorMsg,
@@ -89,7 +89,7 @@ namespace TinyLittleMvvm {
         }
 
         protected void Validate<TProperty>(bool isValid, Expression<Func<TProperty>> property, string error) {
-            Validate(isValid, GetMemberName(property), error);
+            Validate(isValid, ExpressionHelper.GetMemberName(property), error);
         }
 
         protected void Validate(bool isValid, string propertyName, string error) {
@@ -101,7 +101,7 @@ namespace TinyLittleMvvm {
         }
 
         protected void AddError<TProperty>(Expression<Func<TProperty>> property, string error) {
-            AddError(GetMemberName(property), error);
+            AddError(ExpressionHelper.GetMemberName(property), error);
         }
 
         protected void AddError(string propertyName, string error) {
@@ -117,7 +117,7 @@ namespace TinyLittleMvvm {
         }
 
         protected void RemoveError<TProperty>(Expression<Func<TProperty>> property, string error) {
-            RemoveError(GetMemberName(property), error);
+            RemoveError(ExpressionHelper.GetMemberName(property), error);
         }
 
         protected void RemoveError(string propertyName, string error) {
