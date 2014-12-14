@@ -91,6 +91,7 @@ namespace TinyLittleMvvm {
 
     public abstract class BootstrapperBase<TViewModel> : BootstrapperBase, IUiExecution {
         private Window _window;
+
         protected override void ConfigureContainer(ContainerBuilder builder) {
             base.ConfigureContainer(builder);
             builder.RegisterInstance(this).As<IUiExecution>();

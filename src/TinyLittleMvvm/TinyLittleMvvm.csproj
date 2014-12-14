@@ -72,6 +72,7 @@
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ValidationPropertyChangedBase.cs" />
     <Compile Include="ViewLocator.cs" />
+    <Compile Include="ViewModelPresenter.cs" />
     <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>

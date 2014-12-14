@@ -6,6 +6,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:ViewModels="clr-namespace:TinyLittleMvvm.Demo.ViewModels"
+  xmlns:TinyLittleMvvm="clr-namespace:TinyLittleMvvm;assembly=TinyLittleMvvm"
   mc:Ignorable="d"
   GlowBrush="{DynamicResource AccentColorBrush}"
   UseLayoutRounding="True"
@@ -26,6 +27,11 @@
       Command="{Binding ShowSampleFlyoutCommand}"
       Content="Show sample flyout"
       Width="200" Margin="10"/>
+
+    <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" HorizontalAlignment="Center">
+      <TinyLittleMvvm:ViewModelPresenter
+        ViewModel="{Binding SubViewModel}"/>
+    </Border>
 
   </StackPanel>
 </Controls:MetroWindow>

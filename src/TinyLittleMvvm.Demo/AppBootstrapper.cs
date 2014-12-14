@@ -12,10 +12,15 @@ namespace TinyLittleMvvm.Demo {
 
             builder.RegisterType<MainViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<MainView>().SingleInstance();
+
             builder.RegisterType<SampleDialogView>().InstancePerDependency().AsSelf();
             builder.RegisterType<SampleDialogViewModel>().InstancePerDependency().AsSelf();
+
             builder.RegisterType<SampleFlyoutView>().InstancePerDependency().AsSelf();
             builder.RegisterType<SampleFlyoutViewModel>().InstancePerDependency().AsSelf();
+
+            builder.RegisterType<SampleSubView>().InstancePerDependency().AsSelf();
+            builder.RegisterType<SampleSubViewModel>().InstancePerDependency().AsSelf();
         }
 
         protected override string GetLogFolder() {

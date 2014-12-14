@@ -7,17 +7,21 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         private readonly IFlyoutManager _flyoutManager;
         private readonly ICommand _showSampleDialogCommand;
         private readonly ICommand _showSampleFlyoutCommand;
+        private readonly SampleSubViewModel _subViewModel;
         private string _title;
 
-        public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager) {
+        public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
             _dialogManager = dialogManager;
             _flyoutManager = flyoutManager;
             _showSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
             _showSampleFlyoutCommand = new AsyncRelayCommand(OnShowSampleFlyoutAsync);
+            _subViewModel = subViewModel;
         }
 
         public Task OnLoadedAsync() {
             Title = "Tiny Little MVVM Demo";
+
+            _subViewModel.Text = "Hello world";
 
             return Task.FromResult(0);
         }
@@ -38,6 +42,10 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         public ICommand ShowSampleFlyoutCommand {
             get { return _showSampleFlyoutCommand; }
+        }
+
+        public SampleSubViewModel SubViewModel {
+            get { return _subViewModel; }
         }
 
         public IFlyoutManager Flyouts {
