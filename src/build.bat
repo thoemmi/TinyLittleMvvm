@@ -1,1 +1,1 @@
-msbuild TinyLittleMvvm.sln /t:Rebuild /p:Configuration=Release
+%MsBuildExe% %SourcesPath%\src\TinyLittleMvvm.sln /t: %Targets% /p:Configuration=%Configuration%

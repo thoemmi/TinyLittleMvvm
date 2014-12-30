@@ -1,3 +1,3 @@
-%NuGet% install GitVersion.CommandLine -version 2.0.0 -NonInteractive -o packages/
+%NuGet% install GitVersion.CommandLine -version 2.0.0 -NonInteractive -o %SourcesPath%\src\packages\
 
-packages\GitVersion.CommandLine.2.0.0\Tools\GitVersion.exe /output buildserver
+%SourcesPath%\src\packages\GitVersion.CommandLine.2.0.0\Tools\GitVersion.exe /output buildserver

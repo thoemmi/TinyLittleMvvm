@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm", "TinyLittleMvvm\TinyLittleMvvm.csproj", "{091A6BAA-E90D-4701-B7AF-254FC289AB26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm.Demo", "TinyLittleMvvm.Demo\TinyLittleMvvm.Demo.csproj", "{C22346CA-AA21-4D09-963A-0243B20A096B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F15B9A05-2298-464A-8762-762DB004C94F}"
+	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
+		post-build.bat = post-build.bat
+		pre-build.bat = pre-build.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
