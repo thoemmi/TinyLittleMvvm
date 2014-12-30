@@ -1,1 +1,1 @@
-%MsBuildExe% %SourcesPath%\src\TinyLittleMvvm.sln /t: %Targets% /p:Configuration=%Configuration%
+"%MsBuildExe%" %SourcesPath%\src\TinyLittleMvvm.sln /t:%Targets% /p:Configuration=%Configuration%
