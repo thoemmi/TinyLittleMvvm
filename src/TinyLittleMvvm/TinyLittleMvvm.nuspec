@@ -17,7 +17,7 @@
     <dependencies>
       <dependency id="Autofac" version="3.5" />
       <dependency id="MahApps.Metro" version="[1.0,2.0)" />
-      <dependency id="NLog" version="3.0" />
+      <dependency id="NLog" version="3.2" />
     </dependencies>
   </metadata>
 </package>
