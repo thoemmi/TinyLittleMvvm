@@ -6,10 +6,29 @@ using Autofac;
 using NLog;
 
 namespace TinyLittleMvvm {
+    /// <summary>
+    /// Provides methods to get a view instance for a given view model.
+    /// </summary>
     public static class ViewLocator {
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// The function to get the type of a view for a given view model type.
+        /// </summary>
+        /// <remarks>
+        /// By default it takes the full name of the view model type, calls <see cref="GetViewTypeNameFromViewModelTypeName"/>
+        /// and gets a type with the resulting name from the IoC container.
+        /// E.g. if <see cref="GetViewTypeNameFromViewModelTypeName"/> is not changed, for type <em>MyApp.ViewModels.MyViewModel</em>
+        /// it will return the type <em>MyApp.Views.MyView</em>
+        /// </remarks>
         public static Func<Type, Type> GetViewTypeFromViewModelType;
+
+        /// <summary>
+        /// This function returns for the full name of a view model type the corresponding name of the view type.
+        /// </summary>
+        /// <remarks>
+        /// By default, this function simply replaces "ViewModel" with "View", e.g. for "MyApp.ViewModels.MyViewModel" it returns "MyApp.Views.MyView"
+        /// </remarks>
         public static Func<string, string> GetViewTypeNameFromViewModelTypeName;
 
         static ViewLocator() {
@@ -22,11 +41,56 @@ namespace TinyLittleMvvm {
             };
         }
 
+        /// <summary>
+        /// Gets the view for the passed view model.
+        /// </summary>
+        /// <param name="lifetimeScope">The optional scope of the IoC container to get the registered view from.</param>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <returns>The view matching the view model.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC containmer.</exception>
+        /// <remarks>
+        /// <para>
+        /// To get the correct view type of the given <typeparamref name="TViewModel"/>, this method will
+        /// call <see cref="GetViewTypeFromViewModelType"/>.
+        /// </para>
+        /// <para>
+        /// If <typeparamref name="TViewModel"/> implements <see cref="IOnLoadedHandler"/> or <see cref="IOnClosingHandler"/>,
+        /// this method will register the view's corresponding events and call <see cref="IOnLoadedHandler.OnLoadedAsync"/>
+        /// and <see cref="IOnClosingHandler.OnClosing"/> respectively when those events are raised.
+        /// </para>
+        /// <para>
+        /// Don't call <strong>InitializeComponent()</strong> in your view's constructor yourself! If your view contains
+        /// a method called InitializeComponent, this method will call it automatically via reflection.
+        /// This allows the user of the library to remove the code-behind of her/his XAML files.
+        /// </para>
+        /// </remarks>
         public static object GetViewForViewModel<TViewModel>(ILifetimeScope lifetimeScope = null) {
             var viewModel = (lifetimeScope ?? BootstrapperBase.Container).Resolve(typeof(TViewModel));
             return GetViewForViewModel(viewModel);
         }
 
+        /// <summary>
+        /// Gets the view for the passed view model.
+        /// </summary>
+        /// <param name="viewModel">The view model for which a view should be returned.</param>
+        /// <returns>The view matching the view model.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC containmer.</exception>
+        /// <remarks>
+        /// <para>
+        /// To get the correct view type of the passed <paramref name="viewModel"/>, this method will
+        /// call <see cref="GetViewTypeFromViewModelType"/>.
+        /// </para>
+        /// <para>
+        /// If the <paramref name="viewModel"/> implements <see cref="IOnLoadedHandler"/> or <see cref="IOnClosingHandler"/>,
+        /// this method will register the view's corresponding events and call <see cref="IOnLoadedHandler.OnLoadedAsync"/>
+        /// and <see cref="IOnClosingHandler.OnClosing"/> respectively when those events are raised.
+        /// </para>
+        /// <para>
+        /// Don't call <strong>InitializeComponent()</strong> in your view's constructor yourself! If your view contains
+        /// a method called InitializeComponent, this method will call it automatically via reflection.
+        /// This allows the user of the library to remove the code-behind of her/his XAML files.
+        /// </para>
+        /// </remarks>
         public static object GetViewForViewModel(object viewModel) {
             _log.Debug("View for view model {0} requested", viewModel.GetType());
             var viewType = GetViewTypeFromViewModelType(viewModel.GetType());
