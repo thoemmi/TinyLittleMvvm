@@ -7,10 +7,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace TinyLittleMvvm {
-    /// <summary>
-    /// Implementazion of <see cref="IDialogManager"/>
-    /// </summary>
-    public class DialogManager : IDialogManager {
+    internal class DialogManager : IDialogManager {
         public async Task ShowDialogAsync(DialogViewModel viewModel) {
             var view = ViewLocator.GetViewForViewModel(viewModel);
 

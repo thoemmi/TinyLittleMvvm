@@ -6,7 +6,7 @@ using Autofac;
 using MahApps.Metro.Controls;
 
 namespace TinyLittleMvvm {
-    public class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
+    internal class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
         public Task ShowFlyout(DialogViewModel viewModel) {
             ShowFlyoutInternal(viewModel);
             return viewModel.Task;
