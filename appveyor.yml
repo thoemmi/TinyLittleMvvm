@@ -5,7 +5,7 @@ assembly_info:
   patch: false
 
 before_build:
-  - nuget restore
+  - nuget restore src\TinyLittleMvvm.sln
   - ps: gitversion /l console /output buildserver
 
 build:
