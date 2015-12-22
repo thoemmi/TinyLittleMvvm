@@ -1,0 +1,17 @@
+install:
+  - choco install gitversion.portable -pre -y
+
+assembly_info:
+  patch: false
+
+before_build:
+  - nuget restore
+  - ps: gitversion /l console /output buildserver
+
+build:
+  project: src\TinyLittleMvvm.sln
+
+after_build:
+  - cmd: ECHO nuget pack src\TinyLittleMvvm\TinyLittleMvvm.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+  - cmd: nuget pack src\TinyLittleMvvm\TinyLittleMvvm.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+  - cmd: appveyor PushArtifact "TinyLittleMvvm.%GitVersion_NuGetVersion%.nupkg"
