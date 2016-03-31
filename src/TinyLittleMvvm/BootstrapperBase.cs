@@ -29,31 +29,21 @@ namespace TinyLittleMvvm {
             InitializeLogging();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error("UnhandledException", args.ExceptionObject as Exception);
+                LogManager.GetCurrentClassLogger().Error(args.ExceptionObject as Exception, "UnhandledException");
             Application.Current.DispatcherUnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error("DispatcherUnhandledException", args.Exception);
+                LogManager.GetCurrentClassLogger().Error(args.Exception, "DispatcherUnhandledException");
             // ReSharper disable FormatStringProblem
             TaskScheduler.UnobservedTaskException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error("UnobservedTaskException", args.Exception);
+                LogManager.GetCurrentClassLogger().Error(args.Exception, "UnobservedTaskException");
             // ReSharper restore FormatStringProblem
             Application.Current.DispatcherUnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error("DispatcherUnhandledException", args.Exception);
+                LogManager.GetCurrentClassLogger().Error(args.Exception, "DispatcherUnhandledException");
 
             Container = CreateContainer();
         }
 
         private void InitializeLogging() {
             var config = new LoggingConfiguration();
-
-            var fileTarget = new FileTarget {
-                FileName = Path.Combine(GetLogFolder(), "log.xml"),
-                ArchiveFileName = "log_{#####}.xml",
-                ArchiveNumbering = ArchiveNumberingMode.Rolling,
-                ArchiveAboveSize = 1024*1024,
-                Layout = new Log4JXmlEventLayout()
-            };
-            config.AddTarget("file", fileTarget);
-            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
 
             var debuggerTarget = new DebuggerTarget();
             config.AddTarget("debugger", debuggerTarget);
@@ -98,7 +88,7 @@ namespace TinyLittleMvvm {
         }
 
         /// <summary>
-        /// When overroding this method, the implementor can configure additional logging targets.
+        /// When overriding this method, the implementor can configure additional logging targets.
         /// </summary>
         /// <param name="loggingConfiguration">The logging configuration.</param>
         /// <remarks>
@@ -115,6 +105,15 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         protected virtual void ConfigureLogging(LoggingConfiguration loggingConfiguration) {
+            var fileTarget = new FileTarget {
+                FileName = Path.Combine(GetLogFolder(), "log.xml"),
+                ArchiveFileName = "log_{#####}.xml",
+                ArchiveNumbering = ArchiveNumberingMode.Rolling,
+                ArchiveAboveSize = 1024*1024,
+                Layout = new Log4JXmlEventLayout()
+            };
+            loggingConfiguration.AddTarget("file", fileTarget);
+            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
         }
 
         /// <summary>
