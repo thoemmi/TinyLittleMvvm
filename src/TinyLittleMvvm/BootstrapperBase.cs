@@ -164,8 +164,14 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="action">The action to execute.</param>
         void IUiExecution.Execute(Action action) {
-            var dispatcher = _window != null ? _window.Dispatcher : Dispatcher.CurrentDispatcher;
+            var dispatcher = _window?.Dispatcher ?? Dispatcher.CurrentDispatcher;
             dispatcher.Invoke(action);
+        }
+
+        /// <inheritdoc />
+        public Task ExecuteAsync(Action action) {
+            var dispatcher = _window?.Dispatcher ?? Dispatcher.CurrentDispatcher;
+            return dispatcher.InvokeAsync(action).Task;
         }
     }
 }

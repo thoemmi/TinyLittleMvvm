@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -10,5 +11,11 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="action">The action to execute.</param>
         void Execute(Action action);
+
+        /// <summary>
+        /// Executes the passed action in the dispatcher thread asynchronously.
+        /// </summary>
+        /// <param name="action">The action to execute.</param>
+        Task ExecuteAsync(Action action);
     }
 }
