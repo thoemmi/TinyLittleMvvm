@@ -22,7 +22,7 @@ namespace TinyLittleMvvm {
         /// <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
         public RelayCommand(Action execute, Func<bool> canExecute = null) {
             if (execute == null) {
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             }
             _execute = execute;
             _canExecute = canExecute;
@@ -91,7 +91,7 @@ namespace TinyLittleMvvm {
         /// <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
         public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null) {
             if (execute == null) {
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             }
             _execute = execute;
             _canExecute = canExecute;
@@ -155,7 +155,7 @@ namespace TinyLittleMvvm {
         /// <exception cref="ArgumentNullException">If the execute argument is null.</exception>
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null) {
             if (execute == null) {
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             }
 
             _execute = execute;
@@ -228,7 +228,7 @@ namespace TinyLittleMvvm {
         /// <exception cref="ArgumentNullException">If the execute argument is null.</exception>
         public AsyncRelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null) {
             if (execute == null) {
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             }
 
             _execute = execute;

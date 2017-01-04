@@ -13,8 +13,7 @@ namespace TinyLittleMvvm {
 
             var dialog = view as BaseMetroDialog;
             if (dialog == null) {
-                throw new InvalidOperationException(String.Format("The view {0} belonging to view model {1} does not inherit from {2}",
-                    view.GetType(), viewModel.GetType(), typeof (BaseMetroDialog)));
+                throw new InvalidOperationException($"The view {view.GetType()} belonging to view model {viewModel.GetType()} does not inherit from {typeof(BaseMetroDialog)}");
             }
 
             dialog.Resources.MergedDictionaries.Add(new ResourceDictionary {
@@ -37,8 +36,7 @@ namespace TinyLittleMvvm {
 
             var dialog = view as BaseMetroDialog;
             if (dialog == null) {
-                throw new InvalidOperationException(String.Format("The view {0} belonging to view model {1} does not inherit from {2}",
-                    view.GetType(), viewModel.GetType(), typeof (BaseMetroDialog)));
+                throw new InvalidOperationException($"The view {view.GetType()} belonging to view model {viewModel.GetType()} does not inherit from {typeof(BaseMetroDialog)}");
             }
 
             dialog.Resources.MergedDictionaries.Add(new ResourceDictionary {

@@ -3,13 +3,11 @@ using System.Windows.Input;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class SampleDialogViewModel : DialogViewModel<string> {
-        private readonly ICommand _okCommand;
-        private readonly ICommand _cancelCommand;
         private string _text;
 
         public SampleDialogViewModel() {
-            _okCommand = new RelayCommand(OnOk, CanOk);
-            _cancelCommand = new RelayCommand(OnCancel);
+            OkCommand = new RelayCommand(OnOk, CanOk);
+            CancelCommand = new RelayCommand(OnCancel);
             _text = String.Empty;
 
             AddValidationRule(() => Text, text => !String.IsNullOrEmpty(text), "Text must not be empty");
@@ -26,13 +24,9 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             }
         }
 
-        public ICommand OkCommand {
-            get { return _okCommand; }
-        }
+        public ICommand OkCommand { get; }
 
-        public ICommand CancelCommand {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private bool CanOk() {
             return !HasErrors;

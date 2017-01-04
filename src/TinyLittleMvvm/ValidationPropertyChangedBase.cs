@@ -107,9 +107,7 @@ namespace TinyLittleMvvm {
         /// <returns>
         /// true if the entity currently has validation errors; otherwise, false.
         /// </returns>
-        public bool HasErrors {
-            get { return _errors.Any(); }
-        }
+        public bool HasErrors => _errors.Any();
 
         /// <summary>
         /// Occurs when the validation errors have changed for a property or for the entire entity.
@@ -121,10 +119,7 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="propertyName">The name of the validated property.</param>
         protected virtual void OnErrorsChanged(string propertyName) {
-            var handler = ErrorsChanged;
-            if (handler != null) {
-                handler(this, new DataErrorsChangedEventArgs(propertyName));
-            }
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
         /// <summary>

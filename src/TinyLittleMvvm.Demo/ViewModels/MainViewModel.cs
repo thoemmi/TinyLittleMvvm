@@ -4,24 +4,20 @@ using System.Windows.Input;
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler {
         private readonly IDialogManager _dialogManager;
-        private readonly IFlyoutManager _flyoutManager;
-        private readonly ICommand _showSampleDialogCommand;
-        private readonly ICommand _showSampleFlyoutCommand;
-        private readonly SampleSubViewModel _subViewModel;
         private string _title;
 
         public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
             _dialogManager = dialogManager;
-            _flyoutManager = flyoutManager;
-            _showSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
-            _showSampleFlyoutCommand = new AsyncRelayCommand(OnShowSampleFlyoutAsync);
-            _subViewModel = subViewModel;
+            Flyouts = flyoutManager;
+            ShowSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
+            ShowSampleFlyoutCommand = new AsyncRelayCommand(OnShowSampleFlyoutAsync);
+            SubViewModel = subViewModel;
         }
 
         public Task OnLoadedAsync() {
             Title = "Tiny Little MVVM Demo";
 
-            _subViewModel.Text = "Hello world";
+            SubViewModel.Text = "Hello world";
 
             return Task.FromResult(0);
         }
@@ -36,21 +32,13 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             }
         }
 
-        public ICommand ShowSampleDialogCommand {
-            get { return _showSampleDialogCommand; }
-        }
+        public ICommand ShowSampleDialogCommand { get; }
 
-        public ICommand ShowSampleFlyoutCommand {
-            get { return _showSampleFlyoutCommand; }
-        }
+        public ICommand ShowSampleFlyoutCommand { get; }
 
-        public SampleSubViewModel SubViewModel {
-            get { return _subViewModel; }
-        }
+        public SampleSubViewModel SubViewModel { get; }
 
-        public IFlyoutManager Flyouts {
-            get { return _flyoutManager; }
-        }
+        public IFlyoutManager Flyouts { get; }
 
         private async Task OnShowSampleDialogAsync() {
             var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string>();
@@ -60,7 +48,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
  
         private Task OnShowSampleFlyoutAsync() {
-            return _flyoutManager.ShowFlyout<SampleFlyoutViewModel>();
+            return Flyouts.ShowFlyout<SampleFlyoutViewModel>();
         }
     }
 }

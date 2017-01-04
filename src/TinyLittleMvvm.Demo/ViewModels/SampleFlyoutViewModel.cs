@@ -7,28 +7,23 @@ using MahApps.Metro;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class SampleFlyoutViewModel : DialogViewModel {
-        private readonly ICommand _okCommand;
-        private readonly ICommand _cancelCommand;
-        private readonly List<AccentColorMenuData> _accentColors;
         private AccentColorMenuData _currentAccentColor;
 
         public SampleFlyoutViewModel() {
-            _accentColors = ThemeManager.Accents
+            AccentColors = ThemeManager.Accents
                 .Select(a => new AccentColorMenuData {
                     Name = a.Name,
                     ColorBrush = a.Resources["AccentColorBrush"] as Brush
                 })
                 .ToList();
             var theme = ThemeManager.DetectAppStyle(Application.Current);
-            _currentAccentColor = _accentColors.Single(accent => accent.Name == theme.Item2.Name);
+            _currentAccentColor = AccentColors.Single(accent => accent.Name == theme.Item2.Name);
 
-            _okCommand = new RelayCommand(OnOk, () => !HasErrors);
-            _cancelCommand = new RelayCommand(Close);
+            OkCommand = new RelayCommand(OnOk, () => !HasErrors);
+            CancelCommand = new RelayCommand(Close);
         }
 
-        public List<AccentColorMenuData> AccentColors {
-            get { return _accentColors; }
-        }
+        public List<AccentColorMenuData> AccentColors { get; }
 
         public AccentColorMenuData CurrentAccentColor {
             get { return _currentAccentColor; }
@@ -42,13 +37,9 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             }
         }
 
-        public ICommand OkCommand {
-            get { return _okCommand; }
-        }
+        public ICommand OkCommand { get; }
 
-        public ICommand CancelCommand {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private void OnOk() {
             Close();
