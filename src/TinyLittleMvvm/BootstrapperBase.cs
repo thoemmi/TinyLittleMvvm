@@ -32,7 +32,7 @@ namespace TinyLittleMvvm {
         private IContainer CreateContainer() {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<WindowManager>().SingleInstance();
+            builder.RegisterType<WindowManager>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DialogManager>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<FlyoutManager>().AsImplementedInterfaces().SingleInstance();
 
@@ -92,7 +92,7 @@ namespace TinyLittleMvvm {
         /// <param name="sender">The sender of the <see cref="Application.Startup"/> event.</param>
         /// <param name="e">Contains the arguments of the Startup event.</param>
         protected override void OnStartup(object sender, StartupEventArgs e) {
-            _window = Container.Resolve<WindowManager>().ShowWindow<TViewModel>();
+            _window = Container.Resolve<IWindowManager>().ShowWindow<TViewModel>();
         }
 
         /// <summary>
