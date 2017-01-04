@@ -29,10 +29,7 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="propertyName">The name of the changed property.</param>
         protected virtual void NotifyOfPropertyChange(string propertyName = null) {
-            var handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

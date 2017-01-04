@@ -21,18 +21,13 @@ namespace TinyLittleMvvm {
         protected void Close() {
             _tcs.SetResult(0);
 
-            var handler = Closed;
-            if (handler != null) {
-                handler(this, EventArgs.Empty);
-            }
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
         /// A task promising the closing the dialog view model. It is completed when <see cref="Close()"/> was called.
         /// </summary>
-        public Task Task {
-            get { return _tcs.Task; }
-        }
+        public Task Task => _tcs.Task;
 
         /// <summary>
         /// This event is raised when the dialog was closed.
@@ -59,18 +54,13 @@ namespace TinyLittleMvvm {
         protected void Close(TResult result) {
             _tcs.SetResult(result);
 
-            var handler = Closed;
-            if (handler != null) {
-                handler(this, EventArgs.Empty);
-            }
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
         /// A task promising the result of the dialog view model. It is completed when <see cref="Close"/> was called.
         /// </summary>
-        public Task<TResult> Task {
-            get { return _tcs.Task; }
-        }
+        public Task<TResult> Task => _tcs.Task;
 
         /// <summary>
         /// This event is raised when the dialog was closed.
