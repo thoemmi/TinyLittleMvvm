@@ -3,14 +3,14 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using Autofac;
-using NLog;
+using TinyLittleMvvm.Logging;
 
 namespace TinyLittleMvvm {
     /// <summary>
     /// Provides methods to get a view instance for a given view model.
     /// </summary>
     public static class ViewLocator {
-        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _log = LogProvider.GetCurrentClassLogger();
 
         /// <summary>
         /// The function to get the type of a view for a given view model type.
@@ -92,15 +92,15 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         public static object GetViewForViewModel(object viewModel) {
-            _log.Debug("View for view model {0} requested", viewModel.GetType());
+            _log.Debug($"View for view model {viewModel.GetType()} requested");
             var viewType = GetViewTypeFromViewModelType(viewModel.GetType());
             if (viewType == null) {
-                _log.Error("Could not find view for view model type {0}", viewModel.GetType());
+                _log.Error($"Could not find view for view model type {viewModel.GetType()}");
                 throw new InvalidOperationException("No View found for ViewModel of type " + viewModel.GetType());
             }
 
             var view = BootstrapperBase.Container.Resolve(viewType);
-            _log.Debug("Resolved to instance of {0}", view.GetType());
+            _log.Debug($"Resolved to instance of {view.GetType()}");
 
             var frameworkElement = view as FrameworkElement;
             if (frameworkElement != null) {

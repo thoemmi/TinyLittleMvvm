@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Autofac;
+using NLog;
+using NLog.Config;
+using NLog.Layouts;
+using NLog.Targets;
 using TinyLittleMvvm.Demo.ViewModels;
 using TinyLittleMvvm.Demo.Views;
 
 namespace TinyLittleMvvm.Demo {
     public class AppBootstrapper : BootstrapperBase<IShell> {
+        public AppBootstrapper() {
+            InitializeLogging();
+        }
+
         protected override void ConfigureContainer(ContainerBuilder builder) {
             base.ConfigureContainer(builder);
 
@@ -23,7 +32,14 @@ namespace TinyLittleMvvm.Demo {
             builder.RegisterType<SampleSubViewModel>().InstancePerDependency().AsSelf();
         }
 
-        protected override string GetLogFolder() {
+
+        private static void InitializeLogging() {
+            var config = new LoggingConfiguration();
+
+            var debuggerTarget = new DebuggerTarget();
+            config.AddTarget("debugger", debuggerTarget);
+            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, debuggerTarget));
+
             var logFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 Assembly.GetEntryAssembly().GetName().Name,
@@ -33,7 +49,19 @@ namespace TinyLittleMvvm.Demo {
                 Directory.CreateDirectory(logFolder);
             }
 
-            return logFolder;
+            var fileTarget = new FileTarget {
+                FileName = Path.Combine(logFolder, "log.xml"),
+                ArchiveFileName = "log_{#####}.xml",
+                ArchiveNumbering = ArchiveNumberingMode.Rolling,
+                ArchiveAboveSize = 1024 * 1024,
+                Layout = new Log4JXmlEventLayout()
+            };
+            config.AddTarget("file", fileTarget);
+            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
+
+            LogManager.Configuration = config;
+
+            PresentationTraceSources.DataBindingSource.Listeners.Add(new NLogTraceListener());
         }
     }
 }

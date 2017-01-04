@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Autofac;
-using NLog;
-using NLog.Config;
-using NLog.Layouts;
-using NLog.Targets;
+using TinyLittleMvvm.Logging;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -19,41 +14,19 @@ namespace TinyLittleMvvm {
         /// Constructor.
         /// </summary>
         protected BootstrapperBase() {
-            Start();
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+                LogProvider.GetCurrentClassLogger().ErrorException("UnhandledException", args.ExceptionObject as Exception);
+            Application.Current.DispatcherUnhandledException += (sender, args) =>
+                LogProvider.GetCurrentClassLogger().ErrorException("DispatcherUnhandledException", args.Exception);
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+                LogProvider.GetCurrentClassLogger().ErrorException("UnobservedTaskException", args.Exception);
+            Application.Current.DispatcherUnhandledException += (sender, args) =>
+                LogProvider.GetCurrentClassLogger().ErrorException("DispatcherUnhandledException", args.Exception);
+
+            Container = CreateContainer();
 
             Application.Current.Startup += OnStartup;
             Application.Current.Exit += OnExit;
-        }
-
-        private void Start() {
-            InitializeLogging();
-
-            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error(args.ExceptionObject as Exception, "UnhandledException");
-            Application.Current.DispatcherUnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error(args.Exception, "DispatcherUnhandledException");
-            // ReSharper disable FormatStringProblem
-            TaskScheduler.UnobservedTaskException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error(args.Exception, "UnobservedTaskException");
-            // ReSharper restore FormatStringProblem
-            Application.Current.DispatcherUnhandledException += (sender, args) =>
-                LogManager.GetCurrentClassLogger().Error(args.Exception, "DispatcherUnhandledException");
-
-            Container = CreateContainer();
-        }
-
-        private void InitializeLogging() {
-            var config = new LoggingConfiguration();
-
-            var debuggerTarget = new DebuggerTarget();
-            config.AddTarget("debugger", debuggerTarget);
-            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, debuggerTarget));
-
-            ConfigureLogging(config);
-
-            LogManager.Configuration = config;
-
-            PresentationTraceSources.DataBindingSource.Listeners.Add(new NLogTraceListener());
         }
 
         private IContainer CreateContainer() {
@@ -75,54 +48,17 @@ namespace TinyLittleMvvm {
         protected internal static IContainer Container { get; private set; }
 
         /// <summary>
-        /// This method is called to get the folder where the log files should be written.
-        /// </summary>
-        /// <returns>The folder where the log files should be written.</returns>
-        protected abstract string GetLogFolder();
-
-        /// <summary>
         /// This methods allows the inherited class to register her/his classes.
         /// </summary>
         /// <param name="builder"></param>
-        protected virtual void ConfigureContainer(ContainerBuilder builder) {
-        }
-
-        /// <summary>
-        /// When overriding this method, the implementor can configure additional logging targets.
-        /// </summary>
-        /// <param name="loggingConfiguration">The logging configuration.</param>
-        /// <remarks>
-        /// <para>
-        /// TinyLittleMvvm already uses two targets:
-        /// <ul>
-        /// <li>A file logger, with up to 10 rolling files with 1 MB size each, to the folder specified by <see cref="GetLogFolder"/>, with log level Debug.</li>
-        /// <li>A <a href="https://github.com/nlog/nlog/wiki/Debug-target">Debug target</a>, with log level Debug too.</li>
-        /// </ul>
-        /// </para>
-        /// <para>
-        /// See <a href="https://github.com/nlog/nlog/wiki/Configuration-API">NLog's Configuration API</a>
-        /// on how to add additional targets.
-        /// </para>
-        /// </remarks>
-        protected virtual void ConfigureLogging(LoggingConfiguration loggingConfiguration) {
-            var fileTarget = new FileTarget {
-                FileName = Path.Combine(GetLogFolder(), "log.xml"),
-                ArchiveFileName = "log_{#####}.xml",
-                ArchiveNumbering = ArchiveNumberingMode.Rolling,
-                ArchiveAboveSize = 1024*1024,
-                Layout = new Log4JXmlEventLayout()
-            };
-            loggingConfiguration.AddTarget("file", fileTarget);
-            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
-        }
+        protected virtual void ConfigureContainer(ContainerBuilder builder) {}
 
         /// <summary>
         /// Called when the Run method of the Application object is called.
         /// </summary>
         /// <param name="sender">The sender of the <see cref="Application.Startup"/> event.</param>
         /// <param name="e">Contains the arguments of the Startup event.</param>
-        protected virtual void OnStartup(object sender, StartupEventArgs e) {
-        }
+        protected virtual void OnStartup(object sender, StartupEventArgs e) {}
 
         /// <summary>
         /// Called just before an application shuts down, and cannot be canceled.
