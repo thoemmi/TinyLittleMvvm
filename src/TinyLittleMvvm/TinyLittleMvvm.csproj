@@ -69,6 +69,7 @@
     <Compile Include="IOnClosingHandler.cs" />
     <Compile Include="IOnLoadedHandler.cs" />
     <Compile Include="IUiExecution.cs" />
+    <Compile Include="IWindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="ExpressionHelper.cs" />
