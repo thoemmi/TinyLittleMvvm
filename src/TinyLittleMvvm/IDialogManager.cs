@@ -20,8 +20,9 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         /// <param name="viewModel">The view model for the view to be displayed.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A <see cref="Task"/> object which is completed when the dialog is closed.</returns>
-        Task ShowDialogAsync(DialogViewModel viewModel);
+        Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null);
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -37,8 +38,9 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A <see cref="Task"/> object which is completed when the dialog is closed.</returns>
-        Task ShowDialogAsync<TViewModel>() where TViewModel : DialogViewModel;
+        Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel;
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -54,9 +56,10 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         /// <param name="viewModel">The view model for the view to be displayed.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <typeparam name="TResult">The type of the view model's result.</typeparam>
         /// <returns>The result of the view model.</returns>
-        Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel);
+        Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null);
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -73,8 +76,9 @@ namespace TinyLittleMvvm {
         /// </remarks>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <typeparam name="TResult">The type of the view model's result.</typeparam>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>The result of the view model.</returns>
-        Task<TResult> ShowDialogAsync<TViewModel, TResult>() where TViewModel : DialogViewModel<TResult>;
+        Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel<TResult>;
 
         /// <summary>
         /// Displays a message box asynchronously.
