@@ -143,6 +143,25 @@ namespace TinyLittleMvvm {
                     view.Unloaded += handler;
                 }
             }
+
+            var cancelableOnClosingHandler = viewModel as ICancelableOnClosingHandler;
+            if (cancelableOnClosingHandler != null) {
+                var window = view as Window;
+                if (window == null) {
+                    throw new ArgumentException("If a view model implements ICancelableOnClosingHandler, the corresponding view must be a window.");
+                }
+                CancelEventHandler closingHandler = null;
+                closingHandler = (sender, args) => {
+                    args.Cancel = cancelableOnClosingHandler.OnClosing();
+                };
+                window.Closing += closingHandler;
+                EventHandler closedHandler = null;
+                closedHandler = (sender, args) => {
+                    window.Closing -= closingHandler;
+                    window.Closed -= closedHandler;
+                };
+                window.Closed += closedHandler;
+            }
         }
 
         private static void InitializeComponent(object element) {
