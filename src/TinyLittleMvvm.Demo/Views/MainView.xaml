@@ -27,6 +27,11 @@
       Command="{Binding ShowSampleFlyoutCommand}"
       Content="Show sample flyout"
       Width="200" Margin="10"/>
+      
+    <Button
+      Command="{Binding StartWizardCommand}"
+      Content="Start wizard"
+      Width="200" Margin="10"/>
 
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" HorizontalAlignment="Center">
       <TinyLittleMvvm:ViewModelPresenter

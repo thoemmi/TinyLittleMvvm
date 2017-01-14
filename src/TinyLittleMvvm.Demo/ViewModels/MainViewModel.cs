@@ -1,19 +1,23 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TinyLittleMvvm.Wizard.Views;
 
 using MahApps.Metro.Controls.Dialogs;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler, ICancelableOnClosingHandler {
         private readonly IDialogManager _dialogManager;
+        private readonly IWindowManager _windowManager;
         private string _title;
 
-        public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
+        public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel, IWindowManager windowManager) {
             _dialogManager = dialogManager;
+            _windowManager = windowManager;
             Flyouts = flyoutManager;
             ShowSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
             ShowSampleFlyoutCommand = new AsyncRelayCommand(OnShowSampleFlyoutAsync);
+            StartWizardCommand = new RelayCommand(OnStartWizard);
             SubViewModel = subViewModel;
         }
 
@@ -60,6 +64,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         public ICommand ShowSampleDialogCommand { get; }
 
         public ICommand ShowSampleFlyoutCommand { get; }
+        public ICommand StartWizardCommand { get; }
 
         public SampleSubViewModel SubViewModel { get; }
 
@@ -74,6 +79,10 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         private Task OnShowSampleFlyoutAsync() {
             return Flyouts.ShowFlyout<SampleFlyoutViewModel>();
+        }
+
+        public void OnStartWizard() {
+            _windowManager.ShowWindow<WizardView>();
         }
     }
 }
