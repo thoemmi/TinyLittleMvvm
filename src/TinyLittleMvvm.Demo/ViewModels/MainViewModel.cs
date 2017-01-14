@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
+using MahApps.Metro.Controls.Dialogs;
+
 namespace TinyLittleMvvm.Demo.ViewModels {
-    public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler {
+    public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler, ICancelableOnClosingHandler {
         private readonly IDialogManager _dialogManager;
         private string _title;
 
@@ -20,6 +23,28 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             SubViewModel.Text = "Hello world";
 
             return Task.FromResult(0);
+        }
+
+        public bool OnClosing() {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Quit",
+                NegativeButtonText = "Cancel",
+                AnimateShow = true,
+                AnimateHide = false
+            };
+
+            _dialogManager.ShowMessageBox("Quit application?",
+                "Sure you want to quit application?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings)
+                .ContinueWith(t => {
+                    if (t.Result == MessageDialogResult.Affirmative)
+                    {
+                        Application.Current.Shutdown();
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            return true;
         }
 
         public string Title {
@@ -46,7 +71,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
                 await _dialogManager.ShowMessageBox(Title, "You entered: " + text);
             }
         }
- 
+
         private Task OnShowSampleFlyoutAsync() {
             return Flyouts.ShowFlyout<SampleFlyoutViewModel>();
         }

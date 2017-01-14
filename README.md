@@ -51,6 +51,7 @@ in most of my applications I didn't bother).
 
 ## Build service
 
-**TinyLittleMvvm** is built by [MyGet](https://www.myget.org/).
+**TinyLittleMvvm** is built by [MyGet](https://www.myget.org/) and [AppVeyor](http://www.appveyor.com/).
 
 [![tools MyGet Build Status](https://www.myget.org/BuildSource/Badge/tools?identifier=96929ad0-295a-499c-b636-9ffa12346465)](https://www.myget.org/)
+[![Build status](https://ci.appveyor.com/api/projects/status/8pu570b0pm7uw63c/branch/master?svg=true)](https://ci.appveyor.com/project/thoemmi/tinylittlemvvm/branch/master)
