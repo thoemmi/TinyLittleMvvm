@@ -7,7 +7,7 @@ using TinyLittleMvvm.Logging;
 
 namespace TinyLittleMvvm {
     /// <summary>
-    /// Base class for bootstrapper. DON'T INHERIT FROm THIS CLASS BUT <see cref="BootstrapperBase{TViewModel}"/>.
+    /// Base class for bootstrapper. DON'T INHERIT FROM THIS CLASS BUT <see cref="BootstrapperBase{TViewModel}"/>.
     /// </summary>
     public abstract class BootstrapperBase {
         /// <summary>
@@ -77,28 +77,18 @@ namespace TinyLittleMvvm {
     public abstract class BootstrapperBase<TViewModel> : BootstrapperBase, IUiExecution {
         private Window _window;
 
-        /// <summary>
-        /// This methods allows the inherited class to register her/his classes.
-        /// </summary>
-        /// <param name="builder"></param>
+        /// <inheritdoc />
         protected override void ConfigureContainer(ContainerBuilder builder) {
             base.ConfigureContainer(builder);
             builder.RegisterInstance(this).As<IUiExecution>();
         }
 
-        /// <summary>
-        /// Called when the Run method of the Application object is called.
-        /// </summary>
-        /// <param name="sender">The sender of the <see cref="Application.Startup"/> event.</param>
-        /// <param name="e">Contains the arguments of the Startup event.</param>
+        /// <inheritdoc />
         protected override void OnStartup(object sender, StartupEventArgs e) {
             _window = Container.Resolve<IWindowManager>().ShowWindow<TViewModel>();
         }
 
-        /// <summary>
-        /// Executes the passed action in the dispatcher thread.
-        /// </summary>
-        /// <param name="action">The action to execute.</param>
+        /// <inheritdoc />
         void IUiExecution.Execute(Action action) {
             var dispatcher = _window?.Dispatcher ?? Dispatcher.CurrentDispatcher;
             dispatcher.Invoke(action);

@@ -147,10 +147,7 @@ namespace TinyLittleMvvm {
 
         private static void InitializeComponent(object element) {
             var method = element.GetType().GetMethod("InitializeComponent", BindingFlags.Instance | BindingFlags.Public);
-            if (method == null) {
-                return;
-            }
-            method.Invoke(element, null);
+            method?.Invoke(element, null);
         }
     }
 }
