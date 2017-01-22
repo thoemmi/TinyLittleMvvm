@@ -80,6 +80,7 @@
     <Compile Include="ViewLocator.cs" />
     <Compile Include="ViewModelPresenter.cs" />
     <Compile Include="WindowManager.cs" />
+    <Compile Include="Wizard\ViewModels\WizardPageViewModel.cs" />
     <Compile Include="Wizard\ViewModels\WizardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

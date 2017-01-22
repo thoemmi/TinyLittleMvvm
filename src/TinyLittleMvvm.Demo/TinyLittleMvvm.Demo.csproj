@@ -77,6 +77,9 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SampleDialogViewModel.cs" />
     <Compile Include="ViewModels\SampleFlyoutViewModel.cs" />
+    <Compile Include="WizardDemo\ViewModels\Page1ViewModel.cs" />
+    <Compile Include="WizardDemo\ViewModels\Page2ViewModel.cs" />
+    <Compile Include="WizardDemo\ViewModels\Page3ViewModel.cs" />
     <Page Include="Views\SampleSubView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +97,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SampleFlyoutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WizardDemo\Views\Page1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WizardDemo\Views\Page2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WizardDemo\Views\Page3View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,9 +149,7 @@
       <Name>TinyLittleMvvm</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WizardDemo\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

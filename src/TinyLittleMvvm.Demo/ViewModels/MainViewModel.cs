@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using TinyLittleMvvm.Wizard.Views;
 
 using MahApps.Metro.Controls.Dialogs;
+using TinyLittleMvvm.Demo.WizardDemo.ViewModels;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler, ICancelableOnClosingHandler {
@@ -82,7 +82,10 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
 
         public void OnStartWizard() {
-            _windowManager.ShowWindow<WizardView>();
+            _windowManager.ShowWizard(
+                new Page1ViewModel(), 
+                new Page2ViewModel(),
+                new Page3ViewModel());
         }
     }
 }

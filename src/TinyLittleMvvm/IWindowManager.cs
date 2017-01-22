@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TinyLittleMvvm.Wizard.ViewModels;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -20,5 +21,9 @@ namespace TinyLittleMvvm {
         /// <param name="owningWindow">An optional owner for the new window.</param>
         /// <returns>The window.</returns>
         Window ShowWindow(object viewModel, Window owningWindow = null);
+
+        Window ShowWizard<TWizardViewModel>(params WizardPageViewModel[] pageViewModels) where TWizardViewModel : WizardViewModel;
+
+        Window ShowWizard(params WizardPageViewModel[] pageViewModels);
     }
 }
