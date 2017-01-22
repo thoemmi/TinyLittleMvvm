@@ -7,6 +7,10 @@ namespace TinyLittleMvvm {
     /// A content control presenting a view for a given view model via binding.
     /// </summary>
     public class ViewModelPresenter : ContentControl {
+        static ViewModelPresenter() {
+            FocusableProperty.OverrideMetadata(typeof(ViewModelPresenter), new FrameworkPropertyMetadata(false));
+        }
+
         /// <summary>
         /// The dependency property for the bindable view model.
         /// </summary>

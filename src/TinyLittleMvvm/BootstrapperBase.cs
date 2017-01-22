@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Threading;
 using Autofac;
 using TinyLittleMvvm.Logging;
+using TinyLittleMvvm.Wizard.ViewModels;
+using TinyLittleMvvm.Wizard.Views;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -35,6 +37,9 @@ namespace TinyLittleMvvm {
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DialogManager>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<FlyoutManager>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterType<WizardView>().InstancePerDependency();
+            builder.RegisterType<WizardViewModel>().InstancePerDependency();
 
             ConfigureContainer(builder);
 

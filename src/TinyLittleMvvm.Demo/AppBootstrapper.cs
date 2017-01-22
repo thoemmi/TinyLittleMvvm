@@ -9,6 +9,8 @@ using NLog.Layouts;
 using NLog.Targets;
 using TinyLittleMvvm.Demo.ViewModels;
 using TinyLittleMvvm.Demo.Views;
+using TinyLittleMvvm.Demo.WizardDemo.ViewModels;
+using TinyLittleMvvm.Demo.WizardDemo.Views;
 
 namespace TinyLittleMvvm.Demo {
     public class AppBootstrapper : BootstrapperBase<IShell> {
@@ -30,8 +32,14 @@ namespace TinyLittleMvvm.Demo {
 
             builder.RegisterType<SampleSubView>().InstancePerDependency().AsSelf();
             builder.RegisterType<SampleSubViewModel>().InstancePerDependency().AsSelf();
-        }
 
+            builder.RegisterType<Page1View>().InstancePerDependency();
+            builder.RegisterType<Page1ViewModel>().InstancePerDependency();
+            builder.RegisterType<Page2View>().InstancePerDependency();
+            builder.RegisterType<Page2ViewModel>().InstancePerDependency();
+            builder.RegisterType<Page3View>().InstancePerDependency();
+            builder.RegisterType<Page3ViewModel>().InstancePerDependency();
+        }
 
         private static void InitializeLogging() {
             var config = new LoggingConfiguration();
