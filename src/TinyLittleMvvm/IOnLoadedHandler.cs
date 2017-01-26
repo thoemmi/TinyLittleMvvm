@@ -8,8 +8,8 @@ namespace TinyLittleMvvm {
     /// </summary>
     public interface IOnLoadedHandler {
         /// <summary>
-        /// This method is called when the corresponding view's <see cref="Window.Closing"/> or
-        /// <see cref="FrameworkElement.Unloaded"/> event was raised.
+        /// This method is called asynchronously when the corresponding view's
+        /// <see cref="FrameworkElement.Loaded"/> event was raised.
         /// </summary>
         /// <returns></returns>
         Task OnLoadedAsync();

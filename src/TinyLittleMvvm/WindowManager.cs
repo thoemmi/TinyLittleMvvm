@@ -21,10 +21,21 @@ namespace TinyLittleMvvm {
         }
 
         public Window ShowWizard<TWizardViewModel>(params WizardPageViewModel[] pageViewModels) where TWizardViewModel : WizardViewModel {
+            return ShowWizard<TWizardViewModel>(null, pageViewModels);
+        }
+
+        public Window ShowWizard(string title, params WizardPageViewModel[] pageViewModels) {
+            return ShowWizard<WizardViewModel>(title, pageViewModels);
+        }
+
+        private static Window ShowWizard<TWizardViewModel>(string title, params WizardPageViewModel[] pageViewModels) where TWizardViewModel : WizardViewModel {
             var viewModel = BootstrapperBase.Container.Resolve<TWizardViewModel>();
             viewModel.PageViewModels = pageViewModels.ToList();
 
             var window = (Window)ViewLocator.GetViewForViewModel(viewModel);
+            if (title != null) {
+                window.Title = title;
+            }
             window.Resources.MergedDictionaries.Add(new ResourceDictionary {
                 Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml")
             });
@@ -35,8 +46,5 @@ namespace TinyLittleMvvm {
             return window;
         }
 
-        public Window ShowWizard(params WizardPageViewModel[] pageViewModels) {
-            return ShowWizard<WizardViewModel>(pageViewModels);
-        }
     }
 }
