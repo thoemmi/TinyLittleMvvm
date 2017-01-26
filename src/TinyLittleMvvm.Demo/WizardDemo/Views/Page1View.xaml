@@ -13,6 +13,7 @@
   d:DesignWidth="300"
   Header="User account"
   Subheader="Please enter your credentials (hint: both user name and password are &quot;Admin&quot;)"
+  Icon="../../Resources/setup-v_48x.png"
   mc:Ignorable="d">
   <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid.RowDefinitions>
