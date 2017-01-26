@@ -22,8 +22,20 @@ namespace TinyLittleMvvm {
         /// <returns>The window.</returns>
         Window ShowWindow(object viewModel, Window owningWindow = null);
 
+        /// <summary>
+        /// Shows a wizard window.
+        /// </summary>
+        /// <param name="pageViewModels">The models of the wizard pages.</param>
+        /// <typeparam name="TWizardViewModel">The type of the wiard view model.</typeparam>
+        /// <returns>The window containing the wizard.</returns>
         Window ShowWizard<TWizardViewModel>(params WizardPageViewModel[] pageViewModels) where TWizardViewModel : WizardViewModel;
 
-        Window ShowWizard(params WizardPageViewModel[] pageViewModels);
+        /// <summary>
+        /// Shows a wizard window.
+        /// </summary>
+        /// <param name="title">The title of the wizard window.</param>
+        /// <param name="pageViewModels">The models of the wizard pages.</param>
+        /// <returns>The window containing the wizard.</returns>
+        Window ShowWizard(string title, params WizardPageViewModel[] pageViewModels);
     }
 }

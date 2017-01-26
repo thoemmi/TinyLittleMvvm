@@ -21,11 +21,29 @@ namespace TinyLittleMvvm.Wizard.ViewModels {
             FinishCommand = new AsyncRelayCommand(OnFinishAsync, CanFinish);
         }
 
+        /// <summary>
+        /// The command for going backward.
+        /// </summary>
         public ICommand BackCommand { get; }
+
+        /// <summary>
+        /// The command for going forward.
+        /// </summary>
         public ICommand NextCommand { get; }
+
+        /// <summary>
+        /// The command for cancel the wizard.
+        /// </summary>
         public ICommand CancelCommand { get; }
+
+        /// <summary>
+        /// The command for finish the wizard.
+        /// </summary>
         public ICommand FinishCommand { get; }
 
+        /// <summary>
+        /// The list of view models of the wizard pages.
+        /// </summary>
         public List<WizardPageViewModel> PageViewModels { get; internal set; }
 
         /// <summary>
@@ -109,7 +127,14 @@ namespace TinyLittleMvvm.Wizard.ViewModels {
             return _currentPage?.CanFinish ?? _currentPage == PageViewModels.Last();
         }
 
+        /// <summary>
+        /// Specifies if the Cancel button is visible.
+        /// </summary>
         public bool IsCancelVisible => _currentPage?.IsCancelVisible ?? _currentPage != PageViewModels.Last();
+
+        /// <summary>
+        /// Specifies if the Finish button is visible.
+        /// </summary>
         public bool IsFinishVisible => _currentPage?.IsFinishVisible ?? _currentPage == PageViewModels.Last();
 
 
@@ -118,7 +143,8 @@ namespace TinyLittleMvvm.Wizard.ViewModels {
             return Task.FromResult(0);
         }
 
-        public Task OnLoadedAsync() {
+        /// <inheritdoc />
+        public virtual Task OnLoadedAsync() {
             CurrentPage = PageViewModels.First();
             return CurrentPage.OnEnterForwardAsync();
         }

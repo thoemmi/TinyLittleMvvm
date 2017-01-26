@@ -83,6 +83,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         public void OnStartWizard() {
             _windowManager.ShowWizard(
+                "Demo Wizard",
                 new Page1ViewModel(), 
                 new Page2ViewModel(),
                 new Page3ViewModel());
