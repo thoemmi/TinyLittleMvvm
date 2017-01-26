@@ -82,6 +82,7 @@
     <Compile Include="WindowManager.cs" />
     <Compile Include="Wizard\ViewModels\WizardPageViewModel.cs" />
     <Compile Include="Wizard\ViewModels\WizardViewModel.cs" />
+    <Compile Include="Wizard\Views\WizardPageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -92,11 +93,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\WizardPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Wizard\Views\WizardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
