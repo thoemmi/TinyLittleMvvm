@@ -4,7 +4,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:local="clr-namespace:TinyLittleMvvm.Demo.WizardDemo.Views"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:viewModels="clr-namespace:TinyLittleMvvm.Demo.WizardDemo.ViewModels"
   xmlns:views="clr-namespace:TinyLittleMvvm.Wizard.Views;assembly=TinyLittleMvvm"
@@ -12,8 +11,8 @@
   d:DesignHeight="300"
   d:DesignWidth="300"
   Header="User account"
-  Subheader="Please enter your credentials (hint: both user name and password are &quot;Admin&quot;)"
   Icon="../../Resources/setup-v_48x.png"
+  Subheader="Please enter your credentials (hint: both user name and password are &quot;Admin&quot;)"
   mc:Ignorable="d">
   <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid.RowDefinitions>
