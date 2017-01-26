@@ -8,7 +8,7 @@
         <ControlTemplate TargetType="{x:Type views:WizardPageView}">
           <Grid>
             <Grid.RowDefinitions>
-              <RowDefinition Height="auto" />
+              <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -46,6 +46,66 @@
             <ContentPresenter
               x:Name="PART_ContentPresenter"
               Grid.Row="1"
+              Margin="{TemplateBinding Padding}"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              Content="{TemplateBinding Content}"
+              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+              ContentTemplate="{TemplateBinding ContentTemplate}"
+              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+              UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="WizardPageWelcomeStyle" TargetType="{x:Type views:WizardPageView}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type views:WizardPageView}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border
+              Grid.Column="0"
+              Width="200"
+              Background="{DynamicResource GrayBrush10}"
+              BorderBrush="{DynamicResource TextBoxBorderBrush}"
+              BorderThickness="0 0 1 0">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                  Grid.Row="0"
+                  Margin="10 5 5 0"
+                  FontSize="{DynamicResource WindowTitleFontSize}"
+                  Text="{TemplateBinding Header}"
+                  TextWrapping="Wrap" />
+                <TextBlock
+                  Grid.Row="1"
+                  Margin="20 5 5 5"
+                  Text="{TemplateBinding Subheader}"
+                  TextWrapping="Wrap" />
+                <Image
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Bottom"
+                  Source="{TemplateBinding Icon}"
+                  Stretch="None" />
+              </Grid>
+            </Border>
+
+            <ContentPresenter
+              x:Name="PART_ContentPresenter"
+              Grid.Column="1"
               Margin="{TemplateBinding Padding}"
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
