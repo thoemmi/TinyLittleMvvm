@@ -17,16 +17,30 @@
               Background="{DynamicResource GrayBrush10}"
               BorderBrush="{DynamicResource TextBoxBorderBrush}"
               BorderThickness="0 0 0 1">
-              <StackPanel>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
                 <TextBlock
+                  Grid.Row="0"
                   Margin="10 5 5 0"
-                  Text="{TemplateBinding Header}"
-                  FontSize="{DynamicResource WindowTitleFontSize}" />
+                  FontSize="{DynamicResource WindowTitleFontSize}"
+                  Text="{TemplateBinding Header}" />
                 <TextBlock
+                  Grid.Row="1"
                   Margin="20 5 5 5"
                   Text="{TemplateBinding Subheader}"
                   TextWrapping="Wrap" />
-              </StackPanel>
+                <Image
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Margin="0 16 16 0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  Source="{TemplateBinding Icon}"
+                  Stretch="None" />
+              </Grid>
             </Border>
 
             <ContentPresenter

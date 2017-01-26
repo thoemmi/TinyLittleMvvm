@@ -4,11 +4,9 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:local="clr-namespace:TinyLittleMvvm.Wizard.Views"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:tinyLittleMvvm="clr-namespace:TinyLittleMvvm"
   xmlns:viewModels="clr-namespace:TinyLittleMvvm.Wizard.ViewModels"
-  xmlns:wizard="clr-namespace:TinyLittleMvvm.Wizard"
   d:DataContext="{d:DesignInstance viewModels:WizardViewModel}"
   d:DesignHeight="300"
   d:DesignWidth="300"
@@ -33,31 +31,31 @@
       Grid.Row="1"
       Background="{DynamicResource GrayBrush10}"
       BorderBrush="{DynamicResource TextBoxBorderBrush}"
-      BorderThickness="0,1,0,0">
+      BorderThickness="0 1 0 0">
       <StackPanel
         Margin="8"
         HorizontalAlignment="Right"
         Orientation="Horizontal">
         <Button
           MinWidth="80"
-          Margin="8,0,0,0"
+          Margin="8 0 0 0"
           Command="{Binding BackCommand}"
           Content="&lt; Back" />
         <Button
           MinWidth="80"
-          Margin="8,0,0,0"
+          Margin="8 0 0 0"
           Command="{Binding NextCommand}"
           Content="Next &gt;"
           IsDefault="True" />
         <Button
           MinWidth="80"
-          Margin="8,0,0,0"
+          Margin="8 0 0 0"
           Command="{Binding CancelCommand}"
           Content="Cancel"
           Visibility="{Binding IsCancelVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <Button
           MinWidth="80"
-          Margin="8,0,0,0"
+          Margin="8 0 0 0"
           Command="{Binding FinishCommand}"
           Content="Finish"
           Visibility="{Binding IsFinishVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />

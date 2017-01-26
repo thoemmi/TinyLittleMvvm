@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace TinyLittleMvvm.Wizard.Views {
     /// <summary>
@@ -36,6 +37,20 @@ namespace TinyLittleMvvm.Wizard.Views {
         public string Subheader {
             get { return (string) GetValue(SubheaderProperty); }
             set { SetValue(SubheaderProperty, value); }
+        }
+
+        /// <summary>
+        /// The <see cref="DependencyProperty"/> for the <see cref="Icon"/> property.
+        /// </summary>
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+            "Icon", typeof(ImageSource), typeof(WizardPageView), new PropertyMetadata(default(ImageSource)));
+
+        /// <summary>
+        ///  The icon to be displayed in the header.
+        /// </summary>
+        public ImageSource Icon {
+            get { return (ImageSource) GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
         }
     }
 }
