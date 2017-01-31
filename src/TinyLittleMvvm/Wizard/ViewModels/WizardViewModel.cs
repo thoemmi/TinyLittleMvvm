@@ -44,7 +44,7 @@ namespace TinyLittleMvvm.Wizard.ViewModels {
         /// <summary>
         /// The list of view models of the wizard pages.
         /// </summary>
-        public List<WizardPageViewModel> PageViewModels { get; internal set; }
+        public List<WizardPageViewModel> PageViewModels { get; protected internal set; }
 
         /// <summary>
         /// The view model of the current page.
