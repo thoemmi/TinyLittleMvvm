@@ -9,6 +9,7 @@
 
 # User-specific folders
 *.sln.ide/
+.vs/
 
 # Build results
 [Dd]ebug/
