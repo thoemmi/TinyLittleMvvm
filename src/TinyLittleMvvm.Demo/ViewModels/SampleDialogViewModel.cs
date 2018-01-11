@@ -11,15 +11,14 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             _text = String.Empty;
 
             AddValidationRule(() => Text, text => !String.IsNullOrEmpty(text), "Text must not be empty");
+            ValidateAllRules();
         }
 
         public string Text {
             get { return _text; }
             set {
-                if (_text != value) {
-                    _text = value;
+                if (Set(ref _text, value)) {
                     ValidateAllRules();
-                    NotifyOfPropertyChange(() => Text);
                 }
             }
         }

@@ -49,12 +49,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         public string Title {
             get { return _title; }
-            set {
-                if (_title != value) {
-                    _title = value;
-                    NotifyOfPropertyChange(() => Title);
-                }
-            }
+            set { Set(ref _title, value); }
         }
 
         public ICommand ShowSampleDialogCommand { get; }
