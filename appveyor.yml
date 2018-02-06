@@ -4,26 +4,13 @@ configuration: Release
 install:
   - choco install gitversion.portable -pre -y
 
-assembly_info:
-  patch: false
-
 before_build:
-  - nuget restore src\TinyLittleMvvm.sln
-  - ps: gitversion /l console /output buildserver
+  - cmd: gitversion /l console /output buildserver
 
-build:
-  project: src\TinyLittleMvvm.sln
+build_script:
+  - cmd: msbuild src\TinyLittleMvvm.sln /t:restore
+  - cmd: msbuild src\TinyLittleMvvm.sln /t:restore /p:ExcludeRestorePackageImports=true
+  - cmd: msbuild src\TinyLittleMvvm.sln /t:build /p:Configuration=%CONFIGURATION% /p:GeneratePackageOnBuild=true
 
-# create nuget package only for develop and master branch
-for:
-  - branches:
-      only:
-        - master
-        - develop
-
-    skip_branch_with_pr: true
-
-    after_build:
-      - cmd: ECHO nuget pack src\TinyLittleMvvm\TinyLittleMvvm.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-      - cmd: nuget pack src\TinyLittleMvvm\TinyLittleMvvm.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-      - cmd: appveyor PushArtifact "TinyLittleMvvm.%GitVersion_NuGetVersion%.nupkg"
+artifacts:
+  - path: '**\*.nupkg'

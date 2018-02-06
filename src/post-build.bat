@@ -1,1 +1,0 @@
-%NuGet% pack %SourcesPath%\src\TinyLittleMvvm\TinyLittleMvvm.csproj
