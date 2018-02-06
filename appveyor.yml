@@ -14,10 +14,8 @@ before_build:
 build:
   project: src\TinyLittleMvvm.sln
 
-for:
-
 # create nuget package only for develop and master branch
--
+for:
   branches:
     only:
       - master
