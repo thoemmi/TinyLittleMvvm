@@ -1,17 +1,5 @@
-assembly-informational-format: '{NuGetVersion}'
+assembly-informational-format: '{FullSemVer}'
 mode: ContinuousDeployment
 branches:
-  master:
-    tag: rc
-    increment: Minor
-  features?[/-]:
-    tag: rc-{BranchName}
-    increment: Minor
-  (pull|pull\-requests|pr)[/-]:
-    tag: rc-pr-{BranchName}
-    increment: Minor
-  hotfix(es)?[/-]:
-    tag: rc
-    increment: Patch
-  dev(elop)?(ment)?$:
-    tag: b
+  develop:
+    tag: unstable
