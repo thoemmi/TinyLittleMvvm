@@ -2,6 +2,7 @@
 
   <!-- Project properties -->
   <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
     <CustomProjectExtensionsPath>$(SolutionDir)\CustomProjectSystem\</CustomProjectExtensionsPath>
     
     <TargetFramework>net45</TargetFramework>
