@@ -2,21 +2,40 @@
 
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-    <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />    
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
 
-	<PropertyGroup>		        
-        <!-- you can disable (set false) these two properties if you don't want to use default VS behavior for adding your files -->
-		<EnableDefaultItems>true</EnableDefaultItems>
-		<EnableDefaultCompileItems>true</EnableDefaultCompileItems>
-	</PropertyGroup>
-		
-	<Import Project="$(MSBuildThisFileDirectory)\CustomProject.targets" />
-    
-    <!-- workaround for issue #4 from https://github.com/dotnet/sdk/issues/810#issuecomment-295642279 -->      
-	<PropertyGroup>
-		<LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
-	</PropertyGroup>
-    
-    <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />      
-	
+  <PropertyGroup>
+    <!-- you can disable (set false) these two properties if you don't want to use default VS behavior for adding your files -->
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <!-- GitVersion version -->
+  <PropertyGroup>
+    <GitVersionTaskVersion>4.0.0-beta0012</GitVersionTaskVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- reference GitVersionTask package -->
+    <PackageReference Include="GitVersionTask" Version="$(GitVersionTaskVersion)" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!--
+    Import GitVersionTask target
+    This ugly workaround is necessary because of this NuGet issue: https://github.com/NuGet/Home/issues/4790
+  -->
+  <ImportGroup Condition="'$(ExcludeRestorePackageImports)' == 'true'">
+    <Import
+      Project="$(UserProfile)\.nuget\packages\gitversiontask\$(GitVersionTaskVersion)\buildMultiTargeting\GitVersionTask.targets"
+      Condition="Exists('$(UserProfile)\.nuget\packages\gitversiontask\$(GitVersionTaskVersion)\buildMultiTargeting\GitVersionTask.targets')" />
+  </ImportGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)\CustomProject.targets" />
+
+  <!-- workaround for issue #4 from https://github.com/dotnet/sdk/issues/810#issuecomment-295642279 -->
+  <PropertyGroup>
+    <LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+
 </Project>

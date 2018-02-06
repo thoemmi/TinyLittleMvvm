@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project>
   <!-- Project properties -->
   <PropertyGroup>
     <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
     <CustomProjectExtensionsPath>$(SolutionDir)\CustomProjectSystem\</CustomProjectExtensionsPath>
-    
+
     <TargetFramework>net45</TargetFramework>
     <AssemblyName>TinyLittleMvvm</AssemblyName>
     <RootNamespace>TinyLittleMvvm</RootNamespace>
@@ -22,9 +21,8 @@
   <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="GitVersionTask" Version="4.0.0-beta0012" PrivateAssets="All" />
     <PackageReference Include="LibLog" Version="4.2.6" PrivateAssets="All" />
-    <PackageReference Include="MahApps.Metro" Version="[1.5,2.0)" />
+    <PackageReference Include="MahApps.Metro" Version="[1.6.0-alpha0184, 2.0)" />
   </ItemGroup>
 
   <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
