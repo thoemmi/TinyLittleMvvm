@@ -21,6 +21,8 @@ for:
         - master
         - develop
 
+    skip_branch_with_pr: true
+
     after_build:
       - cmd: ECHO nuget pack src\TinyLittleMvvm\TinyLittleMvvm.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
       - cmd: nuget pack src\TinyLittleMvvm\TinyLittleMvvm.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
