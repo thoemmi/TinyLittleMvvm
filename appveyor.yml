@@ -16,12 +16,12 @@ build:
 
 # create nuget package only for develop and master branch
 for:
-  branches:
-    only:
-      - master
-      - develop
+  - branches:
+      only:
+        - master
+        - develop
 
-  after_build:
-    - cmd: ECHO nuget pack src\TinyLittleMvvm\TinyLittleMvvm.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-    - cmd: nuget pack src\TinyLittleMvvm\TinyLittleMvvm.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-    - cmd: appveyor PushArtifact "TinyLittleMvvm.%GitVersion_NuGetVersion%.nupkg"
+    after_build:
+      - cmd: ECHO nuget pack src\TinyLittleMvvm\TinyLittleMvvm.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+      - cmd: nuget pack src\TinyLittleMvvm\TinyLittleMvvm.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+      - cmd: appveyor PushArtifact "TinyLittleMvvm.%GitVersion_NuGetVersion%.nupkg"
