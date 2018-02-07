@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm", "TinyLittleMvvm\TinyLittleMvvm.csproj", "{091A6BAA-E90D-4701-B7AF-254FC289AB26}"
 EndProject
@@ -9,9 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLittleMvvm.Demo", "Tiny
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F15B9A05-2298-464A-8762-762DB004C94F}"
 	ProjectSection(SolutionItems) = preProject
-		build.bat = build.bat
-		post-build.bat = post-build.bat
-		pre-build.bat = pre-build.bat
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
@@ -32,6 +29,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D63F4CF8-D0A5-4440-A648-1D792807C6DD}
 	EndGlobalSection
 	GlobalSection(CodealikeProperties) = postSolution
 		SolutionGuid = 78c34d1c-5700-467f-baec-2ec025902b80
