@@ -11,6 +11,7 @@
     <DebugType>Full</DebugType>
     <OutputTypeEx>winexe</OutputTypeEx>
     <StartupObject>TinyLittleMvvm.Demo.App</StartupObject>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
