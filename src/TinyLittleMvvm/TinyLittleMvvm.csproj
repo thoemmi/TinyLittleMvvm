@@ -21,8 +21,11 @@
   <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="LibLog" Version="4.2.6" PrivateAssets="All" />
-    <PackageReference Include="MahApps.Metro" Version="[1.6.0-alpha0184, 2.0)" />
+    <PackageReference Include="LibLog" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro" Version="1.6.0" />
   </ItemGroup>
 
   <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
