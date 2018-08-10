@@ -7,29 +7,29 @@ using MahApps.Metro.Controls;
 
 namespace TinyLittleMvvm {
     internal class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
-        public Task ShowFlyout(DialogViewModel viewModel) {
-            ShowFlyoutInternal(viewModel);
+        public Task ShowFlyout(DialogViewModel viewModel, Position position = Position.Right) {
+            ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
-        public Task ShowFlyout<TViewModel>() where TViewModel : DialogViewModel {
+        public Task ShowFlyout<TViewModel>(Position position = Position.Right) where TViewModel : DialogViewModel {
             var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
-            ShowFlyoutInternal(viewModel);
+            ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
-        public Task<TResult> ShowFlyout<TResult>(DialogViewModel<TResult> viewModel) {
-            ShowFlyoutInternal(viewModel);
+        public Task<TResult> ShowFlyout<TResult>(DialogViewModel<TResult> viewModel, Position position = Position.Right) {
+            ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
-        public Task<TResult> ShowFlyout<TViewModel, TResult>() where TViewModel : DialogViewModel<TResult> {
+        public Task<TResult> ShowFlyout<TViewModel, TResult>(Position position = Position.Right) where TViewModel : DialogViewModel<TResult> {
             var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
-            ShowFlyoutInternal(viewModel);
+            ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
-        private void ShowFlyoutInternal(IDialogViewModel viewModel) {
+        private void ShowFlyoutInternal(IDialogViewModel viewModel, Position position) {
             var view = (FrameworkElement)ViewLocator.GetViewForViewModel(viewModel);
 
             var flyout = view as Flyout ?? new Flyout { Content = view };
