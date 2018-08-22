@@ -34,7 +34,7 @@ namespace TinyLittleMvvm {
 
             var flyout = view as Flyout ?? new Flyout { Content = view };
             flyout.IsOpen = true;
-            flyout.Position = Position.Right;
+            flyout.Position = position;
             flyout.IsModal = true;
             view.HorizontalAlignment = HorizontalAlignment.Left;
 
