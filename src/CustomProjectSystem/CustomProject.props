@@ -12,7 +12,7 @@
 
   <!-- GitVersion version -->
   <PropertyGroup>
-    <GitVersionTaskVersion>4.0.0-beta0012</GitVersionTaskVersion>
+    <GitVersionTaskVersion>4.0.0-beta0014</GitVersionTaskVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- reference GitVersionTask package -->
