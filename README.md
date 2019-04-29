@@ -41,6 +41,10 @@ in most of my applications I didn't bother).
 
 ## Version history
 
+### v1.1 (4/29/2019)
+
+- fixed deployment bug
+
 ### v1.0 (4/29/2019)
 
 - removed NLog dependency (wasn't used actually, but the package was still referenced)
