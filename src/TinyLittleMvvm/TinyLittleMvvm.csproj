@@ -7,8 +7,8 @@
     <TargetFrameworks>net45;net46;net47</TargetFrameworks>
     <AssemblyName>TinyLittleMvvm</AssemblyName>
     <RootNamespace>TinyLittleMvvm</RootNamespace>
-    <PackageLicenseUrl>https://github.com/thoemmi/TinyLittleMvvm/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright 2015-2018</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2015-$([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
     <PackageProjectUrl>https://github.com/thoemmi/TinyLittleMvvm</PackageProjectUrl>
     <PackageTags>MVVM MahApps Metro WPF</PackageTags>
     <Authors>Thomas Freudenberg</Authors>
@@ -20,17 +20,12 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- including PDB files in NuGet for source link because symbolsource.org does not support portable PDBs -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder> 
-
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
-  </ItemGroup>
 
   <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="LibLog" Version="5.0.3">
+    <PackageReference Include="LibLog" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

@@ -41,13 +41,29 @@ in most of my applications I didn't bother).
 
 ## Version history
 
-### v0.4
+### v1.0 (4/29/2019)
+
+- removed NLog dependency (wasn't used actually, but the package was still referenced)
+- Allow positioning of flyouts (issue #10)
+ 
+### v0.5 (1/14/2017)
+
+- Added `ICancelableOnClosingHandler`
+
+### v0.4 (1/14/2017) 
 
 - **Breaking change:** Switched from [NLog](http://nlog-project.org/) to
   [LibLog](https://github.com/damianh/LibLog), so users of **TinyLittleMvvm** can use whatever
   logging framework they want. Users of previous versions of **TinyLittleMvvm** need to 
   add and configure logging library.
+
+### v0.3.2 (3/31/2016) 
   
+- Added documentation
+
+### v0.3 (1/11/2015) 
+  
+- First usable version
 
 ## Build service
 
