@@ -10,14 +10,14 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         private AccentColorMenuData _currentAccentColor;
 
         public SampleFlyoutViewModel() {
-            AccentColors = ThemeManager.Accents
+            AccentColors = ThemeManager.ColorSchemes
                 .Select(a => new AccentColorMenuData {
                     Name = a.Name,
-                    ColorBrush = a.Resources["AccentColorBrush"] as Brush
+                    ColorBrush = a.ShowcaseBrush
                 })
                 .ToList();
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            _currentAccentColor = AccentColors.Single(accent => accent.Name == theme.Item2.Name);
+            var theme = ThemeManager.DetectTheme(Application.Current);
+            _currentAccentColor = AccentColors.Single(accent => accent.Name == theme.ColorScheme);
 
             OkCommand = new RelayCommand(OnOk, () => !HasErrors);
             CancelCommand = new RelayCommand(Close);
@@ -30,9 +30,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             set {
                 if (_currentAccentColor != value) {
                     _currentAccentColor = value;
-                    var theme = ThemeManager.DetectAppStyle(Application.Current);
-                    var accent = ThemeManager.GetAccent(_currentAccentColor.Name);
-                    ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+                    ThemeManager.ChangeThemeColorScheme(Application.Current, value.Name);
                 }
             }
         }
