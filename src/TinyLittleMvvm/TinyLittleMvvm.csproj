@@ -1,12 +1,7 @@
-﻿<Project>
-  <!-- Project properties -->
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
-    <CustomProjectExtensionsPath>$(SolutionDir)\CustomProjectSystem\</CustomProjectExtensionsPath>
+    <TargetFrameworks>net45;net46;net47;netcoreapp3.0</TargetFrameworks>
 
-    <TargetFrameworks>net45;net46;net47</TargetFrameworks>
-    <AssemblyName>TinyLittleMvvm</AssemblyName>
-    <RootNamespace>TinyLittleMvvm</RootNamespace>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2015-$([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
     <PackageProjectUrl>https://github.com/thoemmi/TinyLittleMvvm</PackageProjectUrl>
@@ -14,6 +9,7 @@
     <Authors>Thomas Freudenberg</Authors>
     <Description>A small opinionated MVVM library</Description>
 
+    <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
@@ -29,11 +25,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MahApps.Metro" Version="1.6.0" />
-  </ItemGroup>
-  <ItemGroup> 
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
-  </ItemGroup> 
-
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" /> 
+    <PackageReference Include="MahApps.Metro" Version="[2.0.0-alpha0312,3)" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />  </ItemGroup> 
 </Project>
