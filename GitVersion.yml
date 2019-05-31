@@ -1,5 +1,21 @@
-assembly-informational-format: '{FullSemVer}'
+next-version: 2.0.0
+assembly-versioning-scheme: Major
+assembly-file-versioning-scheme: MajorMinorPatchTag
 mode: ContinuousDeployment
 branches:
+  master:
+    mode: ContinuousDeployment
+    tag: rc
+    increment: Minor
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    is-release-branch: true
   develop:
+    mode: ContinuousDeployment
     tag: unstable
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
+  pull-request:
+    mode: ContinuousDelivery
+ignore:
+  sha: []
