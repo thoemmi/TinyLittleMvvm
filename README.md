@@ -33,11 +33,14 @@ in most of my applications I didn't bother).
 - Support for [Dialogs](http://mahapps.com/controls/dialogs.html) and
   [Flyouts](http://mahapps.com/controls/flyouts.html)
 
-## NuGet package
 
-[![NuGet](https://img.shields.io/nuget/v/TinyLittleMvvm.svg?style=flat-square)](https://www.nuget.org/packages/TinyLittleMvvm/)
+## Builds and Packages
 
-[https://www.nuget.org/packages/TinyLittleMvvm/](https://www.nuget.org/packages/TinyLittleMvvm/)
+| Build | NuGet Package |
+|---------|------------|
+| [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=develop)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=develop) | ![Nuget](https://img.shields.io/nuget/v/TinyLittleMvvm.svg) |
+| [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=master)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=master)   | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/TinyLittleMvvm.svg) |
+
 
 ## Version history
 
@@ -68,10 +71,3 @@ in most of my applications I didn't bother).
 ### v0.3 (1/11/2015) 
   
 - First usable version
-
-## Build service
-
-**TinyLittleMvvm** is built by [MyGet](https://www.myget.org/) and [AppVeyor](http://www.appveyor.com/).
-
-[![tools MyGet Build Status](https://www.myget.org/BuildSource/Badge/tools?identifier=96929ad0-295a-499c-b636-9ffa12346465)](https://www.myget.org/)
-[![Build status](https://ci.appveyor.com/api/projects/status/8pu570b0pm7uw63c/branch/master?svg=true)](https://ci.appveyor.com/project/thoemmi/tinylittlemvvm/branch/master)
