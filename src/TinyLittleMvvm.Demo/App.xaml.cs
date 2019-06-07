@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using TinyLittleMvvm.Demo.ViewModels;
 using TinyLittleMvvm.Demo.Views;
 
@@ -28,6 +29,10 @@ namespace TinyLittleMvvm.Demo {
         }
 
         private void ConfigureServices(IServiceCollection services) {
+            services
+                .AddLogging(configure => configure.AddDebug())
+                .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
+
             services.AddTinyLittleMvvm();
 
             services.AddSingleton<MainView>();

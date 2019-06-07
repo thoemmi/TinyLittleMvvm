@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
-using TinyLittleMvvm.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -11,11 +11,12 @@ namespace TinyLittleMvvm {
     public class ViewLocator {
         private readonly IServiceProvider _serviceProvider;
         private readonly ViewLocatorOptions _options;
-        private static readonly ILog _log = LogProvider.GetCurrentClassLogger();
+        private readonly ILogger<ViewLocator> _logger;
 
-        public ViewLocator(IServiceProvider serviceProvider, ViewLocatorOptions options) {
+        public ViewLocator(IServiceProvider serviceProvider, ViewLocatorOptions options, ILogger<ViewLocator> logger) {
             _serviceProvider = serviceProvider;
             _options = options;
+            _logger = logger;
         }
 
         /// <summary>
@@ -69,15 +70,15 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         public object GetViewForViewModel(object viewModel, IServiceProvider serviceProvider = null) {
-            _log.Debug($"View for view model {viewModel.GetType()} requested");
+            _logger.LogDebug($"View for view model {viewModel.GetType()} requested");
             var viewType = _options.GetViewTypeFromViewModelType(viewModel.GetType());
             if (viewType == null) {
-                _log.Error($"Could not find view for view model type {viewModel.GetType()}");
+                _logger.LogError($"Could not find view for view model type {viewModel.GetType()}");
                 throw new InvalidOperationException("No View found for ViewModel of type " + viewModel.GetType());
             }
 
             var view = _serviceProvider.GetService(viewType);
-            _log.Debug($"Resolved to instance of {view.GetType()}");
+            _logger.LogDebug($"Resolved to instance of {view.GetType()}");
 
             if (serviceProvider != null && view is DependencyObject dependencyObject) {
                 ServiceProviderPropertyExtension.SetServiceProvider(dependencyObject, serviceProvider);

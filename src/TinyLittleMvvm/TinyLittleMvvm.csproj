@@ -25,11 +25,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="LibLog" Version="5.0.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="[2.0.0-alpha0312,3)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />
   </ItemGroup>
 </Project>
