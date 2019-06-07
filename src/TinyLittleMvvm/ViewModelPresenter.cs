@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,8 +21,8 @@ namespace TinyLittleMvvm {
         /// The view model for which this control should display the corresponding view.
         /// </summary>
         public object ViewModel {
-            get { return GetValue(ViewModelProperty); }
-            set { SetValue(ViewModelProperty, value); }
+            get => GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
         }
 
         private static void OnViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {

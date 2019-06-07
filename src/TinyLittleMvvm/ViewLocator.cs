@@ -109,8 +109,7 @@ namespace TinyLittleMvvm {
                 ServiceProviderPropertyExtension.SetServiceProvider(dependencyObject, serviceProvider);
             }
 
-            var frameworkElement = view as FrameworkElement;
-            if (frameworkElement != null) {
+            if (view is FrameworkElement frameworkElement) {
                 AttachHandler(frameworkElement, viewModel);
                 frameworkElement.DataContext = viewModel;
             }
@@ -121,8 +120,7 @@ namespace TinyLittleMvvm {
         }
 
         private static void AttachHandler(FrameworkElement view, object viewModel) {
-            var onLoadedHandler = viewModel as IOnLoadedHandler;
-            if (onLoadedHandler != null) {
+            if (viewModel is IOnLoadedHandler onLoadedHandler) {
                 RoutedEventHandler handler = null;
                 handler = async (sender, args) => {
                     view.Loaded -= handler;
@@ -131,10 +129,8 @@ namespace TinyLittleMvvm {
                 view.Loaded += handler;
             }
 
-            var onClosingHandler = viewModel as IOnClosingHandler;
-            if (onClosingHandler != null) {
-                var window = view as Window;
-                if (window != null) {
+            if (viewModel is IOnClosingHandler onClosingHandler) {
+                if (view is Window window) {
                     CancelEventHandler handler = null;
                     handler = (sender, args) => {
                         window.Closing -= handler;
@@ -151,10 +147,8 @@ namespace TinyLittleMvvm {
                 }
             }
 
-            var cancelableOnClosingHandler = viewModel as ICancelableOnClosingHandler;
-            if (cancelableOnClosingHandler != null) {
-                var window = view as Window;
-                if (window == null) {
+            if (viewModel is ICancelableOnClosingHandler cancelableOnClosingHandler) {
+                if (!(view is Window window)) {
                     throw new ArgumentException("If a view model implements ICancelableOnClosingHandler, the corresponding view must be a window.");
                 }
                 CancelEventHandler closingHandler = null;

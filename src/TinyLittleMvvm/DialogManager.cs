@@ -42,8 +42,7 @@ namespace TinyLittleMvvm {
         public async Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null) {
             var view = _viewLocator.GetViewForViewModel(viewModel);
 
-            var dialog = view as BaseMetroDialog;
-            if (dialog == null) {
+            if (!(view is BaseMetroDialog dialog)) {
                 throw new InvalidOperationException($"The view {view.GetType()} belonging to view model {viewModel.GetType()} does not inherit from {typeof(BaseMetroDialog)}");
             }
 

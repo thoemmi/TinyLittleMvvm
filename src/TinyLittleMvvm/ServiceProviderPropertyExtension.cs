@@ -2,7 +2,7 @@
 using System.Windows;
 
 namespace TinyLittleMvvm {
-    public class ServiceProviderPropertyExtension {
+    public static class ServiceProviderPropertyExtension {
         public static readonly DependencyProperty ServiceProviderProperty = DependencyProperty.RegisterAttached(
             "ServiceProvider", typeof(IServiceProvider), typeof(ServiceProviderPropertyExtension), new PropertyMetadata(default(IServiceProvider)));
 
