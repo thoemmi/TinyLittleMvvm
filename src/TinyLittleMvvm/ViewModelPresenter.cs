@@ -1,6 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -31,9 +35,24 @@ namespace TinyLittleMvvm {
             self.Content = null;
 
             if (e.NewValue != null) {
-                var view = ViewLocator.GetViewForViewModel(e.NewValue);
+                var serviceProvider = GetServiceProvider(d);
+                var view = serviceProvider.GetService<ViewLocator>().GetViewForViewModel(e.NewValue);
                 self.Content = view;
             }
+        }
+
+        private static IServiceProvider GetServiceProvider(DependencyObject dependencyObject) {
+            do {
+                var serviceProvider = ServiceProviderPropertyExtension.GetServiceProvider(dependencyObject);
+                if (serviceProvider != null) {
+                    return serviceProvider;
+                }
+
+                dependencyObject = dependencyObject.GetParentObject();
+            }
+            while (dependencyObject != null);
+
+            throw new Exception("Could not locate IServiceProvider in visual tree.");
         }
     }
 }

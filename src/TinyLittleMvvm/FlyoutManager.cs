@@ -2,18 +2,26 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using MahApps.Metro.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
     internal class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
+        private readonly ViewLocator _viewLocator;
+        private readonly IServiceProvider _serviceProvider;
+
+        public FlyoutManager(ViewLocator viewLocator, IServiceProvider serviceProvider) {
+            _viewLocator = viewLocator;
+            _serviceProvider = serviceProvider;
+        }
+
         public Task ShowFlyout(DialogViewModel viewModel, Position position = Position.Right) {
             ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
         public Task ShowFlyout<TViewModel>(Position position = Position.Right) where TViewModel : DialogViewModel {
-            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            var viewModel = _serviceProvider.GetService<TViewModel>();
             ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
@@ -24,13 +32,13 @@ namespace TinyLittleMvvm {
         }
 
         public Task<TResult> ShowFlyout<TViewModel, TResult>(Position position = Position.Right) where TViewModel : DialogViewModel<TResult> {
-            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            var viewModel = _serviceProvider.GetService<TViewModel>();
             ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
 
         private void ShowFlyoutInternal(IDialogViewModel viewModel, Position position) {
-            var view = (FrameworkElement)ViewLocator.GetViewForViewModel(viewModel);
+            var view = (FrameworkElement)_viewLocator.GetViewForViewModel(viewModel);
 
             var flyout = view as Flyout ?? new Flyout { Content = view };
             flyout.IsOpen = true;

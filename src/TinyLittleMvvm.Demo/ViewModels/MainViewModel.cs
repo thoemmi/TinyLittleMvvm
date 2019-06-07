@@ -5,7 +5,7 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
-    public class MainViewModel : PropertyChangedBase, IShell, IOnLoadedHandler, ICancelableOnClosingHandler {
+    public class MainViewModel : PropertyChangedBase, IOnLoadedHandler, ICancelableOnClosingHandler {
         private readonly IDialogManager _dialogManager;
         private string _title;
 

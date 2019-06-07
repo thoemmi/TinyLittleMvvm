@@ -2,14 +2,15 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
-using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using TinyLittleMvvm.Logging;
 
 namespace TinyLittleMvvm {
     /// <summary>
     /// Provides methods to get a view instance for a given view model.
     /// </summary>
-    public static class ViewLocator {
+    public class ViewLocator {
+        private readonly IServiceProvider _serviceProvider;
         private static readonly ILog _log = LogProvider.GetCurrentClassLogger();
 
         /// <summary>
@@ -21,7 +22,7 @@ namespace TinyLittleMvvm {
         /// E.g. if <see cref="GetViewTypeNameFromViewModelTypeName"/> is not changed, for type <em>MyApp.ViewModels.MyViewModel</em>
         /// it will return the type <em>MyApp.Views.MyView</em>
         /// </remarks>
-        public static Func<Type, Type> GetViewTypeFromViewModelType;
+        public Func<Type, Type> GetViewTypeFromViewModelType;
 
         /// <summary>
         /// This function returns for the full name of a view model type the corresponding name of the view type.
@@ -29,9 +30,11 @@ namespace TinyLittleMvvm {
         /// <remarks>
         /// By default, this function simply replaces "ViewModel" with "View", e.g. for "MyApp.ViewModels.MyViewModel" it returns "MyApp.Views.MyView"
         /// </remarks>
-        public static Func<string, string> GetViewTypeNameFromViewModelTypeName;
+        public Func<string, string> GetViewTypeNameFromViewModelTypeName;
 
-        static ViewLocator() {
+        public ViewLocator(IServiceProvider serviceProvider) {
+            _serviceProvider = serviceProvider;
+
             GetViewTypeNameFromViewModelTypeName = viewModeltypeName => viewModeltypeName.Replace("ViewModel", "View");
             GetViewTypeFromViewModelType = type => {
                 var viewModelTypeName = type.FullName;
@@ -64,9 +67,9 @@ namespace TinyLittleMvvm {
         /// This allows the user of the library to remove the code-behind of her/his XAML files.
         /// </para>
         /// </remarks>
-        public static object GetViewForViewModel<TViewModel>(ILifetimeScope lifetimeScope = null) {
-            var viewModel = (lifetimeScope ?? BootstrapperBase.Container).Resolve(typeof(TViewModel));
-            return GetViewForViewModel(viewModel);
+        public object GetViewForViewModel<TViewModel>(IServiceProvider serviceProvider = null) {
+            var viewModel = (serviceProvider ?? _serviceProvider).GetService(typeof(TViewModel));
+            return GetViewForViewModel(viewModel, serviceProvider);
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace TinyLittleMvvm {
         /// This allows the user of the library to remove the code-behind of her/his XAML files.
         /// </para>
         /// </remarks>
-        public static object GetViewForViewModel(object viewModel) {
+        public object GetViewForViewModel(object viewModel, IServiceProvider serviceProvider = null) {
             _log.Debug($"View for view model {viewModel.GetType()} requested");
             var viewType = GetViewTypeFromViewModelType(viewModel.GetType());
             if (viewType == null) {
@@ -99,8 +102,12 @@ namespace TinyLittleMvvm {
                 throw new InvalidOperationException("No View found for ViewModel of type " + viewModel.GetType());
             }
 
-            var view = BootstrapperBase.Container.Resolve(viewType);
+            var view = _serviceProvider.GetService(viewType);
             _log.Debug($"Resolved to instance of {view.GetType()}");
+
+            if (serviceProvider != null && view is DependencyObject dependencyObject) {
+                ServiceProviderPropertyExtension.SetServiceProvider(dependencyObject, serviceProvider);
+            }
 
             var frameworkElement = view as FrameworkElement;
             if (frameworkElement != null) {

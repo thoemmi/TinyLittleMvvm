@@ -1,16 +1,34 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
     internal class WindowManager : IWindowManager {
-        public Window ShowWindow<TViewModel>(Window owningWindow = null) {
-            var window = (Window)ViewLocator.GetViewForViewModel<TViewModel>();
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ViewLocator _viewLocator;
+
+        public WindowManager(IServiceProvider serviceProvider, ViewLocator viewLocator) {
+            _serviceProvider = serviceProvider;
+            _viewLocator = viewLocator;
+        }
+
+        public Window ShowWindow<TViewModel>(Window owningWindow = null, IServiceScope scope = null) {
+            var serviceProvider = scope?.ServiceProvider
+                                  ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
+                                  ?? _serviceProvider;
+
+            var window = (Window)_viewLocator.GetViewForViewModel<TViewModel>(serviceProvider);
             window.Owner = owningWindow;
             window.Show();
             return window;
         }
 
-        public Window ShowWindow(object viewModel, Window owningWindow = null) {
-            var window = (Window)ViewLocator.GetViewForViewModel(viewModel);
+        public Window ShowWindow(object viewModel, Window owningWindow = null, IServiceScope scope = null) {
+            var serviceProvider = scope?.ServiceProvider
+                                  ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
+                                  ?? _serviceProvider;
+
+            var window = (Window)_viewLocator.GetViewForViewModel(viewModel, serviceProvider);
             window.Owner = owningWindow;
             window.Show();
             return window;

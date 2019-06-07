@@ -2,14 +2,22 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
     internal class DialogManager : IDialogManager {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ViewLocator _viewLocator;
+
+        public DialogManager(ViewLocator viewLocator, IServiceProvider serviceProvider) {
+            _viewLocator = viewLocator;
+            _serviceProvider = serviceProvider;
+        }
+
         public async Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null) {
-            var view = ViewLocator.GetViewForViewModel(viewModel);
+            var view = _viewLocator.GetViewForViewModel(viewModel);
 
             var dialog = view as BaseMetroDialog;
             if (dialog == null) {
@@ -27,12 +35,12 @@ namespace TinyLittleMvvm {
         }
 
         public Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel {
-            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            var viewModel = _serviceProvider.GetService<TViewModel>();
             return ShowDialogAsync(viewModel, settings);
         }
 
         public async Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null) {
-            var view = ViewLocator.GetViewForViewModel(viewModel);
+            var view = _viewLocator.GetViewForViewModel(viewModel);
 
             var dialog = view as BaseMetroDialog;
             if (dialog == null) {
@@ -52,7 +60,7 @@ namespace TinyLittleMvvm {
         }
 
         public Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel<TResult> {
-            var viewModel = BootstrapperBase.Container.Resolve<TViewModel>();
+            var viewModel = _serviceProvider.GetService<TViewModel>();
             return ShowDialogAsync(viewModel, settings);
         }
 
