@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
     /// <summary>
@@ -21,8 +22,9 @@ namespace TinyLittleMvvm {
         /// </remarks>
         /// <param name="viewModel">The view model for the view to be displayed.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <param name="serviceScope">An optional service scope for the dialog.</param>
         /// <returns>A <see cref="Task"/> object which is completed when the dialog is closed.</returns>
-        Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null);
+        Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null, IServiceScope serviceScope = null);
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -39,8 +41,9 @@ namespace TinyLittleMvvm {
         /// </remarks>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <param name="serviceScope">An optional service scope for the dialog.</param>
         /// <returns>A <see cref="Task"/> object which is completed when the dialog is closed.</returns>
-        Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel;
+        Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel;
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -57,9 +60,10 @@ namespace TinyLittleMvvm {
         /// </remarks>
         /// <param name="viewModel">The view model for the view to be displayed.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <param name="serviceScope">An optional service scope for the dialog.</param>
         /// <typeparam name="TResult">The type of the view model's result.</typeparam>
         /// <returns>The result of the view model.</returns>
-        Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null);
+        Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null, IServiceScope serviceScope = null);
 
         /// <summary>
         /// Shows a dialog asynchronously.
@@ -77,8 +81,9 @@ namespace TinyLittleMvvm {
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <typeparam name="TResult">The type of the view model's result.</typeparam>
         /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <param name="serviceScope">An optional service scope for the dialog.</param>
         /// <returns>The result of the view model.</returns>
-        Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel<TResult>;
+        Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel<TResult>;
 
         /// <summary>
         /// Displays a message box asynchronously.

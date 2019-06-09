@@ -46,6 +46,8 @@ namespace TinyLittleMvvm.Demo {
 
             services.AddTransient<SampleSubView>();
             services.AddTransient<SampleSubViewModel>();
+
+            services.AddScoped<ScopedService>();
         }
     }
 }

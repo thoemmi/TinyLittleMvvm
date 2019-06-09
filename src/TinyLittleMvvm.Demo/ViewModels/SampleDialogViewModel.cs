@@ -5,10 +5,9 @@ namespace TinyLittleMvvm.Demo.ViewModels {
     public class SampleDialogViewModel : DialogViewModel<string> {
         private string _text;
 
-        public SampleDialogViewModel() {
+        public SampleDialogViewModel(ScopedService scopedService) {
             OkCommand = new RelayCommand(OnOk, CanOk);
             CancelCommand = new RelayCommand(OnCancel);
-            _text = String.Empty;
 
             AddValidationRule(() => Text, text => !String.IsNullOrEmpty(text), "Text must not be empty");
         }

@@ -16,8 +16,8 @@ namespace TinyLittleMvvm {
             _serviceProvider = serviceProvider;
         }
 
-        public async Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null) {
-            var view = _viewLocator.GetViewForViewModel(viewModel);
+        public async Task ShowDialogAsync(DialogViewModel viewModel, MetroDialogSettings settings = null, IServiceScope serviceScope = null) {
+            var view = _viewLocator.GetViewForViewModel(viewModel, serviceScope?.ServiceProvider);
 
             var dialog = view as BaseMetroDialog;
             if (dialog == null) {
@@ -34,13 +34,13 @@ namespace TinyLittleMvvm {
             await firstMetroWindow.HideMetroDialogAsync(dialog, settings);
         }
 
-        public Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel {
-            var viewModel = _serviceProvider.GetService<TViewModel>();
-            return ShowDialogAsync(viewModel, settings);
+        public Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel {
+            var viewModel = (serviceScope.ServiceProvider ?? _serviceProvider).GetService<TViewModel>();
+            return ShowDialogAsync(viewModel, settings, serviceScope);
         }
 
-        public async Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null) {
-            var view = _viewLocator.GetViewForViewModel(viewModel);
+        public async Task<TResult> ShowDialogAsync<TResult>(DialogViewModel<TResult> viewModel, MetroDialogSettings settings = null, IServiceScope serviceScope = null) {
+            var view = _viewLocator.GetViewForViewModel(viewModel, serviceScope?.ServiceProvider ?? _serviceProvider);
 
             if (!(view is BaseMetroDialog dialog)) {
                 throw new InvalidOperationException($"The view {view.GetType()} belonging to view model {viewModel.GetType()} does not inherit from {typeof(BaseMetroDialog)}");
@@ -58,9 +58,9 @@ namespace TinyLittleMvvm {
             return result;
         }
 
-        public Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null) where TViewModel : DialogViewModel<TResult> {
-            var viewModel = _serviceProvider.GetService<TViewModel>();
-            return ShowDialogAsync(viewModel, settings);
+        public Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel<TResult> {
+            var viewModel = (serviceScope?.ServiceProvider ?? _serviceProvider).GetService<TViewModel>();
+            return ShowDialogAsync(viewModel, settings, serviceScope);
         }
 
         public Task<MessageDialogResult> ShowMessageBox(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null) {

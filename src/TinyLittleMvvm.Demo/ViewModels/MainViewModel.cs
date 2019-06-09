@@ -1,15 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IOnLoadedHandler, ICancelableOnClosingHandler {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IDialogManager _dialogManager;
         private string _title;
 
-        public MainViewModel(IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
+        public MainViewModel(IServiceProvider serviceProvider, IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
+            _serviceProvider = serviceProvider;
             _dialogManager = dialogManager;
             Flyouts = flyoutManager;
             ShowSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
@@ -66,9 +70,11 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         public IFlyoutManager Flyouts { get; }
 
         private async Task OnShowSampleDialogAsync() {
-            var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string>();
-            if (text != null) {
-                await _dialogManager.ShowMessageBox(Title, "You entered: " + text);
+            using (var scope = _serviceProvider.CreateScope()) {
+                var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string>(serviceScope:scope);
+                if (text != null) {
+                    await _dialogManager.ShowMessageBox(Title, "You entered: " + text);
+                }
             }
         }
 
