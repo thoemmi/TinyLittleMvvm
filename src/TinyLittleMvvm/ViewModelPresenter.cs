@@ -35,7 +35,7 @@ namespace TinyLittleMvvm {
 
             if (e.NewValue != null) {
                 var serviceProvider = GetServiceProvider(d);
-                var view = serviceProvider.GetService<ViewLocator>().GetViewForViewModel(e.NewValue);
+                var view = serviceProvider.GetRequiredService<ViewLocator>().GetViewForViewModel(e.NewValue);
                 self.Content = view;
             }
         }

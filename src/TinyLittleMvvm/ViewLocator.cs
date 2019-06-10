@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace TinyLittleMvvm {
@@ -43,7 +44,7 @@ namespace TinyLittleMvvm {
         /// </para>
         /// </remarks>
         public object GetViewForViewModel<TViewModel>(IServiceProvider serviceProvider = null) {
-            var viewModel = (serviceProvider ?? _serviceProvider).GetService(typeof(TViewModel));
+            var viewModel = (serviceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
             return GetViewForViewModel(viewModel, serviceProvider);
         }
 
@@ -77,7 +78,7 @@ namespace TinyLittleMvvm {
                 throw new InvalidOperationException("No View found for ViewModel of type " + viewModel.GetType());
             }
 
-            var view = _serviceProvider.GetService(viewType);
+            var view = _serviceProvider.GetRequiredService(viewType);
             _logger.LogDebug($"Resolved to instance of {view.GetType()}");
 
             if (serviceProvider != null && view is DependencyObject dependencyObject) {

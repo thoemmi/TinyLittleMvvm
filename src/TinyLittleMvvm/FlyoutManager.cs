@@ -21,7 +21,7 @@ namespace TinyLittleMvvm {
         }
 
         public Task ShowFlyout<TViewModel>(Position position = Position.Right) where TViewModel : DialogViewModel {
-            var viewModel = _serviceProvider.GetService<TViewModel>();
+            var viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }
@@ -32,7 +32,7 @@ namespace TinyLittleMvvm {
         }
 
         public Task<TResult> ShowFlyout<TViewModel, TResult>(Position position = Position.Right) where TViewModel : DialogViewModel<TResult> {
-            var viewModel = _serviceProvider.GetService<TViewModel>();
+            var viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             ShowFlyoutInternal(viewModel, position);
             return viewModel.Task;
         }

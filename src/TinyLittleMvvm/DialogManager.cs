@@ -35,7 +35,7 @@ namespace TinyLittleMvvm {
         }
 
         public Task ShowDialogAsync<TViewModel>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel {
-            var viewModel = (serviceScope.ServiceProvider ?? _serviceProvider).GetService<TViewModel>();
+            var viewModel = (serviceScope.ServiceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
             return ShowDialogAsync(viewModel, settings, serviceScope);
         }
 
@@ -59,7 +59,7 @@ namespace TinyLittleMvvm {
         }
 
         public Task<TResult> ShowDialogAsync<TViewModel, TResult>(MetroDialogSettings settings = null, IServiceScope serviceScope = null) where TViewModel : DialogViewModel<TResult> {
-            var viewModel = (serviceScope?.ServiceProvider ?? _serviceProvider).GetService<TViewModel>();
+            var viewModel = (serviceScope?.ServiceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
             return ShowDialogAsync(viewModel, settings, serviceScope);
         }
 

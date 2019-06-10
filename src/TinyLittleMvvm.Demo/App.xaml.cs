@@ -19,7 +19,7 @@ namespace TinyLittleMvvm.Demo {
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            ServiceProvider.GetService<IWindowManager>().ShowWindow<MainViewModel>();
+            ServiceProvider.GetRequiredService<IWindowManager>().ShowWindow<MainViewModel>();
         }
 
         protected override void OnExit(ExitEventArgs e) {
