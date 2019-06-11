@@ -47,20 +47,13 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  displayName: Run tests
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   displayName: Create NuGet package
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'pack'
     packagesToPack: '$(projectToPublish)'
     versioningScheme: 'off'
-    includeSymbols: true
 
 - task: NuGetCommand@2
   displayName: Publish NuGet package
