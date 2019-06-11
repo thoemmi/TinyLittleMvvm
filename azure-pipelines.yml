@@ -9,44 +9,52 @@ pool:
 
 variables:
   solution: '**/*.sln'
-  projectToPublish: '**/TinyLittleMvvm'
+  projectToPublish: '**/TinyLittleMvvm.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
 - task: NuGetToolInstaller@0
+  displayName: Install NuGet
 
 - task: NuGetCommand@2
+  displayName: Install GitVersion
   inputs:
     command: 'custom'
     arguments: 'install GitVersion.CommandLine -ExcludeVersion -PreRelease -OutputDirectory $(Build.BinariesDirectory)/tools'
     
 - task: CmdLine@2
+  displayName: Determine build number
   inputs:
     script: '$(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch'
 
 - task: UseDotNet@2
+  displayName: Ensure to use .NET Core 3.0.100-preview5
   inputs:
     packageType: 'sdk'
     version: '3.0.100-preview5-011568'
     includePreviewVersions: true
 
 - task: NuGetCommand@2
+  displayName: Restore NuGet packages
   inputs:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: Build projects
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: Run tests
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: NuGetCommand@2
+  displayName: Create NuGet package
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'pack'
@@ -55,6 +63,7 @@ steps:
     includeSymbols: true
 
 - task: NuGetCommand@2
+  displayName: Publish NuGet package
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'push'
