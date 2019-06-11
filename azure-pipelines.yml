@@ -8,7 +8,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  projects: '**/*.csproj'
   projectToPublish: '**/TinyLittleMvvm.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -35,16 +35,18 @@ steps:
     version: '3.0.100-preview5-011568'
     includePreviewVersions: true
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   displayName: Restore NuGet packages
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'restore'
+    projects: '$(projects)'
+    configuration: '$(buildConfiguration)'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   displayName: Build projects
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
+    command: 'build'
+    projects: '$(projects)'
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -52,6 +54,8 @@ steps:
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'pack'
+    configuration: '$(BuildConfiguration)'
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
     packagesToPack: '$(projectToPublish)'
     versioningScheme: 'off'
 
