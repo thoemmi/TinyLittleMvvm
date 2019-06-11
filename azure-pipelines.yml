@@ -9,6 +9,7 @@ pool:
 
 variables:
   solution: '**/*.sln'
+  projectToPublish: '**/TinyLittleMvvm'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -44,3 +45,19 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: NuGetCommand@2
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projectToPublish)'
+    versioningScheme: 'off'
+    includeSymbols: true
+
+- task: NuGetCommand@2
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'NuGet.org'
