@@ -15,7 +15,9 @@
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- including PDB files in NuGet for source link because symbolsource.org does not support portable PDBs -->
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder> 
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>TinyLittleMvvmKey.snk</AssemblyOriginatorKeyFile> 
   </PropertyGroup>
 
   <!-- NuGet packages -->
