@@ -36,10 +36,10 @@ in most of my applications I didn't bother).
 
 ## Builds and Packages
 
-| Build | NuGet Package |
-|---------|------------|
-| [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=develop)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=develop) | ![Nuget](https://img.shields.io/nuget/v/TinyLittleMvvm.svg) |
-| [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=master)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=master)   | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/TinyLittleMvvm.svg) |
+| Channel  | Build | NuGet Package |
+|----------|-------|---------------|
+| Unstable | [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=develop)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=develop) | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/TinyLittleMvvm.svg)](https://www.nuget.org/packages/TinyLittleMvvm/absoluteLatest) |
+| Stable   | [![Build Status](https://dev.azure.com/thoemmi/TinyLittleMvvm/_apis/build/status/thoemmi.TinyLittleMvvm?branchName=master)](https://dev.azure.com/thoemmi/TinyLittleMvvm/_build/latest?definitionId=5&branchName=master)   | [![Nuget](https://img.shields.io/nuget/v/TinyLittleMvvm.svg)](https://www.nuget.org/packages/TinyLittleMvvm/) |
 
 
 ## Version history
