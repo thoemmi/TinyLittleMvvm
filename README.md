@@ -44,13 +44,22 @@ in most of my applications I didn't bother).
 
 ## Version history
 
+### v2 (not released yet)
+
+- .NET Core 3 support
+- Dropped support for .NET Framework &lt; 4.7.2
+- Use **Microsoft.Extensions.Logging** instead of **LibLog**.
+- Use **Microsoft.Extensions.DependencyInjection** instead of **Autofac**.
+- Strong-named assembly.
+- Template for `dotnet new`.
+
 ### v1.1 (4/29/2019)
 
 - fixed deployment bug
 
 ### v1.0 (4/29/2019)
 
-- removed NLog dependency (wasn't used actually, but the package was still referenced)
+- removed **NLog** dependency (wasn't used actually, but the package was still referenced)
 - Allow positioning of flyouts (issue #10)
  
 ### v0.5 (1/14/2017)
