@@ -27,7 +27,7 @@
   <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-    <PackageReference Include="GitVersionTask" Version="5.0.0-beta4-1">
+    <PackageReference Include="GitVersionTask" Version="5.0.0-beta4-9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
