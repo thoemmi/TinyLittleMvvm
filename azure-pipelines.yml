@@ -47,14 +47,14 @@ steps:
   inputs:
     command: 'build'
     projects: '$(projects)'
-    configuration: '$(buildConfiguration)'
+    configurationToPack: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Create NuGet package
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'pack'
-    configuration: '$(BuildConfiguration)'
+    configuration: '$(buildConfiguration)'
     packDirectory: '$(Build.ArtifactStagingDirectory)'
     packagesToPack: '$(projectToPublish)'
     versioningScheme: 'off'
