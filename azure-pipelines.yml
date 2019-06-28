@@ -47,7 +47,8 @@ steps:
   inputs:
     command: 'build'
     projects: '$(projects)'
-    configurationToPack: '$(buildConfiguration)'
+    configuration: '$(buildConfiguration)'
+    arguments: '/p:Configuration=$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Create NuGet package
