@@ -8,6 +8,12 @@
     <OutputTypeEx>winexe</OutputTypeEx>
     <StartupObject>TinyLittleMvvm.Demo.App</StartupObject>
     <IsPackable>false</IsPackable>
+
+    <!--
+      Instruct GitVersion to NOT generate its own AssemblyInfo file. Setting MSBuild properties
+      is sufficient, and the SDK build will use those properties to create the full temporary AssemblyInfo file
+    -->
+    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
