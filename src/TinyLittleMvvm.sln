@@ -12,7 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		global.json = global.json
 		..\README.md = ..\README.md
+		Templates\templatepack.csproj = Templates\templatepack.csproj
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{AB452B1A-B290-4883-B8C6-3C1C33E8B509}"
+	ProjectSection(SolutionItems) = preProject
+		Templates\templatepack.csproj = Templates\templatepack.csproj
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateApp", "Templates\TemplateApp\TemplateApp.csproj", "{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,9 +36,16 @@ Global
 		{C22346CA-AA21-4D09-963A-0243B20A096B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C22346CA-AA21-4D09-963A-0243B20A096B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C22346CA-AA21-4D09-963A-0243B20A096B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9ED49AA-0779-475C-B8B5-DEC53FCAFE14} = {AB452B1A-B290-4883-B8C6-3C1C33E8B509}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D63F4CF8-D0A5-4440-A648-1D792807C6DD}

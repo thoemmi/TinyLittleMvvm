@@ -6,7 +6,6 @@
     <UseWPF>true</UseWPF>
     <DebugType>Full</DebugType>
     <OutputTypeEx>winexe</OutputTypeEx>
-    <StartupObject>TinyLittleMvvm.Demo.App</StartupObject>
     <IsPackable>false</IsPackable>
 
     <!--
@@ -20,12 +19,6 @@
     <RootNamespace>TinyLittleMvvm.Demo</RootNamespace>
     <AssemblyName>TinyLittleMvvm.Demo</AssemblyName>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="GitVersionTask" Version="5.0.0-beta4-9">

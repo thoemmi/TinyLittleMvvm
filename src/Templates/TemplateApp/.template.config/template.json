@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Thomas Freudenberg",
+    "classifications": [ "WPF", "MVVM" ],
+    "identity": "TinyLittmeMvvm.Template",
+    "name": "WPF application using TinyLittleMvvm",
+    "shortName": "tinylittlemvvm",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
+    "sourceName": "TemplateApp"
+    
+  }
