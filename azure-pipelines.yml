@@ -8,8 +8,8 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  projects: '**/*.csproj'
-  projectToPublish: '**/TinyLittleMvvm.csproj'
+  projectsToBuild: '**/*.csproj;!**/templatepack.csproj'
+  projectsToPublish: '**/TinyLittleMvvm.csproj;**/templatepack.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -39,29 +39,28 @@ steps:
   displayName: Restore NuGet packages
   inputs:
     command: 'restore'
-    projects: '$(projects)'
+    projects: '$(projectsToBuild)'
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Build projects
   inputs:
     command: 'build'
-    projects: '$(projects)'
+    projects: '$(projectsToBuild)'
     configuration: '$(buildConfiguration)'
     arguments: '/p:Configuration=$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Create NuGet package
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
+  displayName: Create NuGet packages
   inputs:
     command: 'pack'
     configuration: '$(buildConfiguration)'
     packDirectory: '$(Build.ArtifactStagingDirectory)'
-    packagesToPack: '$(projectToPublish)'
+    packagesToPack: '$(projectsToPublish)'
     versioningScheme: 'off'
 
 - task: NuGetCommand@2
-  displayName: Publish NuGet package
+  displayName: Publish NuGet packages
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
   inputs:
     command: 'push'
