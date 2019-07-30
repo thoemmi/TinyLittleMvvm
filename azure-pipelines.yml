@@ -8,7 +8,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  projectsToBuild: '**/*.csproj;!**/templatepack.csproj'
+  projects: '**/*.csproj'
   projectsToPublish: '**/TinyLittleMvvm.csproj;**/templatepack.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -39,14 +39,14 @@ steps:
   displayName: Restore NuGet packages
   inputs:
     command: 'restore'
-    projects: '$(projectsToBuild)'
+    projects: '$(projects)'
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Build projects
   inputs:
     command: 'build'
-    projects: '$(projectsToBuild)'
+    projects: '$(projects)'
     configuration: '$(buildConfiguration)'
     arguments: '/p:Configuration=$(buildConfiguration)'
 
