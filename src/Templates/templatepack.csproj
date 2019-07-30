@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0</PackageVersion>
     <PackageId>TinyLittleMvvm.Templates</PackageId>
     <Title>TinyLittleMvvm Templates</Title>
     <Authors>Thomas Freudenberg</Authors>
     <Description>Templates for creating WPF applications with MahApps.Metro and TinyLittleMvvm.</Description>
     <PackageTags>dotnet-new;templates;WPF;TinyLittleMvvm;Mvvm;MahApps.Metro</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2015-$([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
+    <PackageProjectUrl>https://github.com/thoemmi/TinyLittleMvvm</PackageProjectUrl>
 
     <TargetFramework>netcoreapp3.0</TargetFramework>
 
