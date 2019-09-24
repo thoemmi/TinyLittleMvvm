@@ -8,12 +8,6 @@
     <PackageTags>MVVM MahApps Metro WPF</PackageTags>
     <Authors>Thomas Freudenberg</Authors>
     <Description>A small opinionated MVVM library</Description>
-
-    <!--
-      Instruct GitVersion to NOT generate its own AssemblyInfo file. Setting MSBuild properties
-      is sufficient, and the SDK build will use those properties to create the full temporary AssemblyInfo file
-    -->
-    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
     
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -36,8 +30,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MahApps.Metro" Version="[2.0.0-alpha0312,3)" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0479" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
   </ItemGroup>
 </Project>
