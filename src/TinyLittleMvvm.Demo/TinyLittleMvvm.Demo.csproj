@@ -1,23 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>winexe</OutputType>
     <UseWPF>true</UseWPF>
     <DebugType>Full</DebugType>
     <OutputTypeEx>winexe</OutputTypeEx>
     <IsPackable>false</IsPackable>
-
-    <!--
-      Instruct GitVersion to NOT generate its own AssemblyInfo file. Setting MSBuild properties
-      is sufficient, and the SDK build will use those properties to create the full temporary AssemblyInfo file
-    -->
-    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Configuration">
-    <RootNamespace>TinyLittleMvvm.Demo</RootNamespace>
-    <AssemblyName>TinyLittleMvvm.Demo</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
   </ItemGroup>
 

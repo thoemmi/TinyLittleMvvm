@@ -1,42 +1,50 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TinyLittleMvvm;
 
 using TemplateApp.ViewModels;
 using TemplateApp.Views;
 
-namespace TemplateApp
-{
+namespace TemplateApp {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
-        public ServiceProvider ServiceProvider { get; private set; }
+    public partial class App {
+        private readonly IHost _host;
 
-        protected override void OnStartup(StartupEventArgs e) {
-            base.OnStartup(e);
-
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-
-            ServiceProvider.GetRequiredService<IWindowManager>().ShowWindow<MainViewModel>();
+        public App() {
+            _host = new HostBuilder()
+                .ConfigureAppConfiguration((context, configurationBuilder) => {
+                    configurationBuilder.SetBasePath(context.HostingEnvironment.ContentRootPath);
+                    configurationBuilder.AddJsonFile("appsettings.json", optional: false);
+                })
+                .ConfigureServices((context, services) => {
+                    ConfigureServices(services);
+                })
+                .ConfigureLogging(logging => {
+                    logging.AddDebug();
+                })
+                .Build();
         }
 
-        protected override void OnExit(ExitEventArgs e) {
-            base.OnExit(e);
+        private async void Application_Startup(object sender, StartupEventArgs e) {
+            await _host.StartAsync();
 
-            ServiceProvider.Dispose();
+            _host.Services
+                .GetRequiredService<IWindowManager>()
+                .ShowWindow<MainViewModel>();
+        }
+
+        private async void Application_Exit(object sender, ExitEventArgs e) {
+            await _host.StopAsync(TimeSpan.FromSeconds(5));
+            _host.Dispose();
         }
 
         private void ConfigureServices(IServiceCollection services) {
-            services
-                .AddLogging(configure => configure.AddDebug())
-                .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
-
             services.AddTinyLittleMvvm();
 
             services.AddSingleton<MainView>();
