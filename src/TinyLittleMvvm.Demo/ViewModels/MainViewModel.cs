@@ -10,7 +10,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IOnLoadedHandler, ICancelableOnClosingHandler {
         private readonly IServiceProvider _serviceProvider;
         private readonly IDialogManager _dialogManager;
-        private string _title;
+        private string _title = "Tiny Little MVVM Demo";
 
         public MainViewModel(IServiceProvider serviceProvider, IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
             _serviceProvider = serviceProvider;
@@ -22,8 +22,6 @@ namespace TinyLittleMvvm.Demo.ViewModels {
         }
 
         public Task OnLoadedAsync() {
-            Title = "Tiny Little MVVM Demo";
-
             SubViewModel.Text = "Hello world";
 
             return Task.FromResult(0);
