@@ -2,7 +2,7 @@
 
 namespace TinyLittleMvvm {
     /// <summary>
-    /// Provides options how TinyLittleMvvm finds the type of a view for a given view model.
+    /// Provides options specifying how TinyLittleMvvm can resolve the type of a view for a given view model.
     /// </summary>
     public class ViewLocatorOptions {
         /// <summary>
@@ -24,9 +24,12 @@ namespace TinyLittleMvvm {
         /// </remarks>
         public Func<string, string> GetViewTypeNameFromViewModelTypeName;
 
+        /// <summary>
+        /// Creates a new <see cref="ViewLocatorOptions"/> instance.
+        /// </summary>
         public ViewLocatorOptions()
         {
-            GetViewTypeNameFromViewModelTypeName = viewModeltypeName => viewModeltypeName.Replace("ViewModel", "View");
+            GetViewTypeNameFromViewModelTypeName = viewModelTypeName => viewModelTypeName.Replace("ViewModel", "View");
             GetViewTypeFromViewModelType = type => {
                 var viewModelTypeName = type.FullName;
                 var viewTypeName = GetViewTypeNameFromViewModelTypeName(viewModelTypeName);
