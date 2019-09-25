@@ -14,6 +14,12 @@ namespace TinyLittleMvvm {
         private readonly ViewLocatorOptions _options;
         private readonly ILogger<ViewLocator> _logger;
 
+        /// <summary>
+        /// Creates a new <see cref="ViewLocator"/> instance.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+        /// <param name="options">The options for ViewModel discovery.</param>
+        /// <param name="logger">The logger.</param>
         public ViewLocator(IServiceProvider serviceProvider, ViewLocatorOptions options, ILogger<ViewLocator> logger) {
             _serviceProvider = serviceProvider;
             _options = options;
@@ -23,10 +29,11 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// Gets the view for the passed view model.
         /// </summary>
-        /// <param name="lifetimeScope">The optional scope of the IoC container to get the registered view from.</param>
+        /// <param name="serviceProvider">The optional service provider. If <see langname="null"/>, the instance passed in the
+        /// constructor will be used.</param>
         /// <typeparam name="TViewModel"></typeparam>
         /// <returns>The view matching the view model.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC containmer.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC container.</exception>
         /// <remarks>
         /// <para>
         /// To get the correct view type of the given <typeparamref name="TViewModel"/>, this method will
@@ -52,8 +59,10 @@ namespace TinyLittleMvvm {
         /// Gets the view for the passed view model.
         /// </summary>
         /// <param name="viewModel">The view model for which a view should be returned.</param>
+        /// <param name="serviceProvider">The optional service provider. If <see langname="null"/>, the instance passed in the
+        /// constructor will be used.</param>
         /// <returns>The view matching the view model.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC containmer.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC container.</exception>
         /// <remarks>
         /// <para>
         /// To get the correct view type of the passed <paramref name="viewModel"/>, this method will
