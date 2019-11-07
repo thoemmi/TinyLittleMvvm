@@ -10,14 +10,17 @@ namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IOnLoadedHandler, ICancelableOnClosingHandler {
         private readonly IServiceProvider _serviceProvider;
         private readonly IDialogManager _dialogManager;
+        private readonly IWindowManager _iWindowManager;
         private string _title = "Tiny Little MVVM Demo";
 
-        public MainViewModel(IServiceProvider serviceProvider, IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
+        public MainViewModel(IServiceProvider serviceProvider,IWindowManager iWindowManager, IDialogManager dialogManager, IFlyoutManager flyoutManager, SampleSubViewModel subViewModel) {
             _serviceProvider = serviceProvider;
             _dialogManager = dialogManager;
+            _iWindowManager = iWindowManager;
             Flyouts = flyoutManager;
             ShowSampleDialogCommand = new AsyncRelayCommand(OnShowSampleDialogAsync);
             ShowSampleFlyoutCommand = new AsyncRelayCommand(OnShowSampleFlyoutAsync);
+            ShowDialogWindowCommand = new RelayCommand(OnShowingDialogWindow);
             SubViewModel = subViewModel;
         }
 
@@ -63,6 +66,8 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         public ICommand ShowSampleFlyoutCommand { get; }
 
+        public ICommand ShowDialogWindowCommand { get; }
+
         public SampleSubViewModel SubViewModel { get; }
 
         public IFlyoutManager Flyouts { get; }
@@ -78,6 +83,11 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         private Task OnShowSampleFlyoutAsync() {
             return Flyouts.ShowFlyout<SampleFlyoutViewModel>();
+        }
+
+        private void OnShowingDialogWindow()
+        {
+            _iWindowManager.ShowDialog(_serviceProvider.GetRequiredService<WindowViewModel>());
         }
     }
 }
