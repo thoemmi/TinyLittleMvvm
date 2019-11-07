@@ -1,11 +1,13 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm
+{
     /// <summary>
     /// Declares methods to show windows.
     /// </summary>
-    public interface IWindowManager {
+    public interface IWindowManager
+    {
         /// <summary>
         /// Shows a window for a given view model type.
         /// </summary>
@@ -23,5 +25,23 @@ namespace TinyLittleMvvm {
         /// <param name="scope">Optional IoC scope for the window.</param>
         /// <returns>The window.</returns>
         Window ShowWindow(object viewModel, Window owningWindow = null, IServiceScope scope = null);
+
+        /// <summary>
+        /// Shows a window for a given view model type as a Dialog.
+        /// </summary>
+        /// <param name="owningWindow">An optional owner for the new window.</param>
+        /// <param name="scope">Optional IoC scope for the window.</param>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <returns>The dialog window.</returns>
+        Window ShowDialog<TViewModel>(Window owningWindow = null, IServiceScope scope = null);
+
+        /// <summary>
+        /// Shows a window for a given view model object as a Dialog.
+        /// </summary>
+        /// <param name="viewModel">The view model for the window to be displayed.</param>
+        /// <param name="owningWindow">An optional owner for the new window.</param>
+        /// <param name="scope">Optional IoC scope for the window.</param>
+        /// <returns>The dialog window.</returns>
+        Window ShowDialog(object viewModel, Window owningWindow = null, IServiceScope scope = null);
     }
 }
