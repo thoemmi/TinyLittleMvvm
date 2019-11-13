@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,14 +47,19 @@ namespace TinyLittleMvvm.Demo {
 
         private void ConfigureServices(IServiceCollection services) {
             services.AddSingleton<MainView>();
-            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<MainViewModel>(); 
+            
+            services.AddTransient<SampleDialogView>();
+            services.AddTransient<SampleDialogViewModel>();
 
-            services.AddScoped<ScopedService>();
-            GetType().Assembly.GetTypes()
-                .Where(type => type.IsClass && type.IsPublic && (type.Name.EndsWith("ViewModel") || type.Name.EndsWith("View")))
-                .Where(type => type.Name != nameof(MainView) || type.Name != nameof(MainViewModel))
-                .ToList()
-                .ForEach(viewModelType => services.AddTransient(viewModelType));
+            services.AddTransient<SampleFlyoutView>();
+            services.AddTransient<SampleFlyoutViewModel>();
+
+            services.AddTransient<SampleSubView>();
+            services.AddTransient<SampleSubViewModel>();
+
+            services.AddTransient<WindowView>();
+            services.AddTransient<WindowViewModel>();
 
             services.AddScoped<ScopedService>();
         }
