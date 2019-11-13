@@ -28,7 +28,7 @@
       Content="Show sample flyout"
       Width="200" Margin="10"/>
 
-        <Button
+    <Button
       Command="{Binding ShowDialogWindowCommand}"
       Content="Show Window as Dialog"
       Width="200" Margin="10"/>
