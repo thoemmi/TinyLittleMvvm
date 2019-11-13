@@ -87,7 +87,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         private void OnShowingDialogWindow()
         {
-            _windowManager.ShowDialog(_serviceProvider.GetRequiredService<WindowViewModel>());
+            _windowManager.ShowDialog<WindowViewModel>();
         }
     }
 }
