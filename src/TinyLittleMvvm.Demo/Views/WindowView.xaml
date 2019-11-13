@@ -7,7 +7,8 @@
                       xmlns:ViewModels="clr-namespace:TinyLittleMvvm.Demo.ViewModels"
                       mc:Ignorable="d" d:DataContext="{d:DesignInstance ViewModels:WindowViewModel}"
         Title="Dialog Window" Height="450" Width="800">
+    
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="{Binding Text}"/>
+      <TextBlock Text="{Binding Text}"/>
     </Grid>
 </Controls:MetroWindow>
