@@ -21,7 +21,7 @@ namespace TinyLittleMvvm.Demo.ViewModels
 
         public Task OnLoadedAsync()
         {
-            Text = "A window Opened as a dialog";
+            Text = "This is a modal window";
             return Task.CompletedTask;
         }
     }
