@@ -33,7 +33,7 @@
       Content="Show Window as Dialog"
       Width="200" Margin="10"/>
 
-        <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" HorizontalAlignment="Center">
+    <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" HorizontalAlignment="Center">
       <TinyLittleMvvm:ViewModelPresenter
         ViewModel="{Binding SubViewModel}"/>
     </Border>

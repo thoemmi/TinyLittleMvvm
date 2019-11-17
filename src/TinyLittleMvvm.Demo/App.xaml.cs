@@ -48,7 +48,7 @@ namespace TinyLittleMvvm.Demo {
         private void ConfigureServices(IServiceCollection services) {
             services.AddSingleton<MainView>();
             services.AddSingleton<MainViewModel>(); 
-            
+
             services.AddTransient<SampleDialogView>();
             services.AddTransient<SampleDialogViewModel>();
 
