@@ -2,8 +2,8 @@
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm  {
-    internal class WindowManager : IWindowManager  {
+namespace TinyLittleMvvm {
+    internal class WindowManager : IWindowManager {
         private readonly IServiceProvider _serviceProvider;
         private readonly ViewLocator _viewLocator;
 
