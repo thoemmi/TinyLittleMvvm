@@ -33,5 +33,18 @@ namespace TinyLittleMvvm {
             window.Show();
             return window;
         }
+
+        public (bool?, TViewModel) ShowDialog<TViewModel>(Window owningWindow = null, IServiceScope scope = null) {
+            var serviceProvider = scope?.ServiceProvider
+                                  ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
+                                  ?? _serviceProvider;
+
+            var viewModel = (serviceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
+
+            var window = (Window)_viewLocator.GetViewForViewModel(viewModel, serviceProvider);
+            window.Owner = owningWindow;
+            var result = window.ShowDialog();
+            return (result, viewModel);
+        }
     }
 }

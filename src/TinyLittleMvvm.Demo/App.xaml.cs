@@ -58,6 +58,9 @@ namespace TinyLittleMvvm.Demo {
             services.AddTransient<SampleSubView>();
             services.AddTransient<SampleSubViewModel>();
 
+            services.AddTransient<WindowView>();
+            services.AddTransient<WindowViewModel>();
+
             services.AddScoped<ScopedService>();
         }
     }
