@@ -2,11 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
 
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright 2015-$([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
     <PackageProjectUrl>https://github.com/thoemmi/TinyLittleMvvm</PackageProjectUrl>
-    <PackageTags>MVVM MahApps Metro WPF</PackageTags>
-    <Authors>Thomas Freudenberg</Authors>
+    <PackageTags>MVVM;MahApps Metro;MahApps.Metro;WPF</PackageTags>
     <Description>A small opinionated MVVM library</Description>
     
     <UseWPF>true</UseWPF>

@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Thomas Freudenberg</Authors>
+
+    <Copyright>Copyright 2015-$([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/thoemmi/TinyLittleMvvm</RepositoryUrl>
+  </PropertyGroup>
+</Project>
