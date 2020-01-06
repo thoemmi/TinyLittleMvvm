@@ -32,4 +32,24 @@
     <Compile Remove="**\*" />
   </ItemGroup>
 
+  <Target Name="BackupAndPatchTemplateProject" AfterTargets="GetVersion">
+    <!-- Create copy of template csproj and patch version for referenced TinyLittleMvvm package -->
+    <Copy 
+      SourceFiles="TemplateApp/TemplateApp.csproj" 
+      DestinationFiles="obj/TemplateApp.csproj.backup"
+      SkipUnchangedFiles="true" />
+    <XmlPoke
+      XmlInputPath="TemplateApp/TemplateApp.csproj"
+      Query="//PackageReference[@Include='TinyLittleMvvm']/@Version"
+      Value="[$(GitVersion_NuGetVersionV2),3]" />
+    <Message Importance="High" Text="GitVersion_NuGetVersionV2 is $(GitVersion_NuGetVersionV2)" />
+  </Target>
+
+  <Target Name="RestoreTemplateProject" AfterTargets="Pack">
+    <!-- restore version for referenced TinyLittleMvvm package -->
+    <Move
+      SourceFiles="obj/TemplateApp.csproj.backup"
+      DestinationFiles="TemplateApp/TemplateApp.csproj" />
+  </Target>
+
 </Project>
