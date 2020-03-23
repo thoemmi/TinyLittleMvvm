@@ -7,6 +7,7 @@
   xmlns:ViewModels="clr-namespace:TinyLittleMvvm.Demo.ViewModels"
   xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
   mc:Ignorable="d"
+  CloseCommand="{Binding CancelCommand}"
   Header="Sample Settings"
   d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance ViewModels:SampleFlyoutViewModel}">
     <Grid Margin="15">
