@@ -7,7 +7,7 @@
     <Description>Templates for creating WPF applications with MahApps.Metro and TinyLittleMvvm.</Description>
     <PackageTags>dotnet-new;templates;WPF;TinyLittleMvvm;Mvvm;MahApps.Metro</PackageTags>
 
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.1.3">
+    <PackageReference Include="GitVersionTask" Version="5.3.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

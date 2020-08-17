@@ -25,7 +25,7 @@ namespace TinyLittleMvvm {
             }
 
             dialog.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml")
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml")
             });
 
             var firstMetroWindow = Application.Current.Windows.OfType<MetroWindow>().First();
@@ -47,7 +47,7 @@ namespace TinyLittleMvvm {
             }
 
             dialog.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml")
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml")
             });
 
             var firstMetroWindow = Application.Current.Windows.OfType<MetroWindow>().First();

@@ -46,7 +46,7 @@ namespace TinyLittleMvvm {
             flyout.IsModal = true;
             view.HorizontalAlignment = HorizontalAlignment.Left;
 
-            flyout.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml") });
+            flyout.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml") });
 
             EventHandler closedHandler = null;
             closedHandler = (sender, args) => {

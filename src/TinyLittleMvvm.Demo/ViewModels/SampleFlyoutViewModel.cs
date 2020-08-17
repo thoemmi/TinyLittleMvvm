@@ -3,20 +3,21 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using MahApps.Metro;
+using ControlzEx.Theming;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class SampleFlyoutViewModel : DialogViewModel {
         private AccentColorMenuData _currentAccentColor;
 
         public SampleFlyoutViewModel() {
-            AccentColors = ThemeManager.ColorSchemes
+            AccentColors = ThemeManager.Current.Themes
+                .GroupBy(x => x.ColorScheme)
                 .Select(a => new AccentColorMenuData {
-                    Name = a.Name,
-                    ColorBrush = a.ShowcaseBrush
+                    Name = a.Key,
+                    ColorBrush = a.First().ShowcaseBrush
                 })
                 .ToList();
-            var theme = ThemeManager.DetectTheme(Application.Current);
+            var theme = ThemeManager.Current.DetectTheme(Application.Current);
             _currentAccentColor = AccentColors.Single(accent => accent.Name == theme.ColorScheme);
 
             OkCommand = new RelayCommand(OnOk, () => !HasErrors);
@@ -30,7 +31,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
             set {
                 if (_currentAccentColor != value) {
                     _currentAccentColor = value;
-                    ThemeManager.ChangeThemeColorScheme(Application.Current, value.Name);
+                    ThemeManager.Current.ChangeThemeColorScheme(Application.Current, value.Name);
                 }
             }
         }
