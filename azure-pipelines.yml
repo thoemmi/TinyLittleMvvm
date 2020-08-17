@@ -29,10 +29,10 @@ steps:
     script: '$(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch'
 
 - task: UseDotNet@2
-  displayName: Ensure to use .NET Core 3.0.100
+  displayName: Ensure to use .NET Core 3.1
   inputs:
     packageType: 'sdk'
-    version: '3.0.100'
+    version: '3.1.x'
 
 - task: DotNetCoreCLI@2
   displayName: Restore NuGet packages
