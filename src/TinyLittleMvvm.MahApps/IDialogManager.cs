@@ -2,7 +2,7 @@
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm.MahAppsExt {
     /// <summary>
     /// Declares methods to show dialogs.
     /// </summary>

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TinyLittleMvvm\TinyLittleMvvm.csproj" />
+    <ProjectReference Include="..\TinyLittleMvvm.MahApps\TinyLittleMvvm.MahAppsExt.csproj" />
   </ItemGroup>
 
 </Project>
