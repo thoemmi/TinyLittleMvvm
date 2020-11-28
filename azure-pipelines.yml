@@ -14,9 +14,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: Install NuGet
-
 - task: NuGetCommand@2
   displayName: Install GitVersion
   inputs:
@@ -29,10 +26,10 @@ steps:
     script: '$(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch'
 
 - task: UseDotNet@2
-  displayName: Ensure to use .NET Core 3.1
+  displayName: Ensure to use .NET Core 5.x
   inputs:
     packageType: 'sdk'
-    version: '3.1.x'
+    version: '5.x'
 
 - task: DotNetCoreCLI@2
   displayName: Restore NuGet packages
