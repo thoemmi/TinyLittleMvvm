@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TinyLittleMvvm.Demo.ViewModels;
 using TinyLittleMvvm.Demo.Views;
+using TinyLittleMvvm.MahAppsMetro;
 
 namespace TinyLittleMvvm.Demo {
     /// <summary>
@@ -21,7 +22,9 @@ namespace TinyLittleMvvm.Demo {
                     configurationBuilder.AddJsonFile("appsettings.json", optional: true);
                 })
                 .ConfigureServices((context, services) => {
-                    services.AddTinyLittleMvvm();
+                    services
+                        .AddTinyLittleMvvm()
+                        .AddTinyLittleMvvmForMahAppsMetro();
 
                     ConfigureServices(services);
                 })

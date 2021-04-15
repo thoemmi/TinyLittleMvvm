@@ -1,7 +1,7 @@
-﻿using MahApps.Metro.Controls;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MahApps.Metro.Controls;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm.MahAppsMetro {
     /// <summary>
     /// Declares the methods for showing <a href="http://mahapps.com/controls/flyouts.html">flyouts</a>.
     /// </summary>

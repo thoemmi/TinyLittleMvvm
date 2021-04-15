@@ -5,6 +5,7 @@ using System.Windows.Input;
 
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
+using TinyLittleMvvm.MahAppsMetro;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
     public class MainViewModel : PropertyChangedBase, IOnLoadedHandler, ICancelableOnClosingHandler {

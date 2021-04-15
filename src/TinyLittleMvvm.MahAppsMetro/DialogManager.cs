@@ -6,7 +6,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm.MahAppsMetro {
     internal class DialogManager : IDialogManager {
         private readonly IServiceProvider _serviceProvider;
         private readonly ViewLocator _viewLocator;

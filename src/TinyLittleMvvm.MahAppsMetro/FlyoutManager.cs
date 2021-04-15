@@ -5,7 +5,7 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm.MahAppsMetro {
     internal class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
         private readonly ViewLocator _viewLocator;
         private readonly IServiceProvider _serviceProvider;
