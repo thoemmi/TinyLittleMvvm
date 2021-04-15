@@ -17,24 +17,36 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-
-    - name: Restore dependencies
-      run: |
-        cd src
-        dotnet restore
-
-    - name: Build
-      run: |
-        cd src
-        dotnet build --no-restore
-
-    
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+  
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+  
+      - name: Restore dependencies
+        run: |
+          cd src
+          dotnet restore
+  
+      - name: Build
+        run: |
+          cd src
+          dotnet build --configuration Release --no-restore
+  
+      - name: Pack
+        run: |
+          cd src
+          dotnet pack TinyLittleMvvm/TinyLittleMvvm.csproj --configuration Release --no-build --output .
+          dotnet pack TinyLittleMvvm.MahAppsMetro/TinyLittleMvvm.MahAppsMetro.csproj --configuration Release --no-build --output .
+          dotnet pack Templates\templatepack.csproj --configuration Release --no-build --output .
+  
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nupkg
+          path: ./src/*.nupkg
+      
