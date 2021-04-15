@@ -52,3 +52,6 @@ jobs:
           name: nupkg
           path: ./src/*.nupkg
       
+      - name: Publish to NuGet
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: dotnet nuget push ./src/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
