@@ -36,6 +36,7 @@ jobs:
         run: |
           cd src
           dotnet build --configuration Release --no-restore
+          dotnet build Templates\templatepack.csproj --configuration Release --no-restore
   
       - name: Pack
         run: |
