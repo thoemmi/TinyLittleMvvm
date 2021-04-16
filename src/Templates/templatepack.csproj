@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.3.7">
+    <PackageReference Include="GitVersion.MsBuild" Version="5.6.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -35,9 +35,17 @@
       SourceFiles="TemplateApp/TemplateApp.csproj" 
       DestinationFiles="obj/TemplateApp.csproj.backup"
       SkipUnchangedFiles="true" />
+    <Copy 
+      SourceFiles="TemplateApp.MahAppsMetro/TemplateApp.MahAppsMetro.csproj" 
+      DestinationFiles="obj/TemplateApp.MahAppsMetro.csproj.backup"
+      SkipUnchangedFiles="true" />
     <XmlPoke
       XmlInputPath="TemplateApp/TemplateApp.csproj"
       Query="//PackageReference[@Include='TinyLittleMvvm']/@Version"
+      Value="[$(GitVersion_NuGetVersionV2),3]" />
+    <XmlPoke
+      XmlInputPath="TemplateApp.MahAppsMetro/TemplateApp.MahAppsMetro.csproj"
+      Query="//PackageReference[@Include='TinyLittleMvvm.MahAppsMetro']/@Version"
       Value="[$(GitVersion_NuGetVersionV2),3]" />
     <Message Importance="High" Text="GitVersion_NuGetVersionV2 is $(GitVersion_NuGetVersionV2)" />
   </Target>
@@ -47,6 +55,9 @@
     <Move
       SourceFiles="obj/TemplateApp.csproj.backup"
       DestinationFiles="TemplateApp/TemplateApp.csproj" />
+    <Move
+      SourceFiles="obj/TemplateApp.MahAppsMetro.csproj.backup"
+      DestinationFiles="TemplateApp.MahAppsMetro/TemplateApp.MahAppsMetro.csproj" />
   </Target>
 
 </Project>
