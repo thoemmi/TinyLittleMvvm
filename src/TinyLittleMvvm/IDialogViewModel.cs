@@ -8,6 +8,6 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// This event is raised when the dialog was closed.
         /// </summary>
-        event EventHandler Closed;
+        event EventHandler? Closed;
     }
 }

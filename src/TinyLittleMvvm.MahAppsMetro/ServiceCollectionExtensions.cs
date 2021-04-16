@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm.MahAppsMetro {
     /// <summary>
@@ -11,9 +10,8 @@ namespace TinyLittleMvvm.MahAppsMetro {
         /// Adds required services to the given service collection.
         /// </summary>
         /// <param name="services">The service collection.</param>
-        /// <param name="configure">An optional delegate to customize the resolution of ViewModels.</param>
         /// <returns></returns>
-        public static IServiceCollection AddTinyLittleMvvmForMahAppsMetro(this IServiceCollection services, Action<ViewLocatorOptions> configure = null)
+        public static IServiceCollection AddTinyLittleMvvmForMahAppsMetro(this IServiceCollection services)
         {
             services.AddSingleton<IDialogManager, DialogManager>();
             services.AddSingleton<IFlyoutManager, FlyoutManager>();

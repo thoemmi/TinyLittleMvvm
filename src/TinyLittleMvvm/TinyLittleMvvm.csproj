@@ -3,9 +3,13 @@
     <TargetFrameworks>net472;net48;netcoreapp3.1;net5.0-windows</TargetFrameworks>
 
     <PackageProjectUrl>https://github.com/thoemmi/TinyLittleMvvm</PackageProjectUrl>
-    <PackageTags>MVVM;MahApps Metro;MahApps.Metro;WPF</PackageTags>
+    <PackageTags>MVVM;WPF</PackageTags>
     <Description>A small opinionated MVVM library</Description>
-    
+
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

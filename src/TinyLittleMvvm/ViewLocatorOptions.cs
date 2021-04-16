@@ -31,10 +31,10 @@ namespace TinyLittleMvvm {
         {
             GetViewTypeNameFromViewModelTypeName = viewModelTypeName => viewModelTypeName.Replace("ViewModel", "View");
             GetViewTypeFromViewModelType = type => {
-                var viewModelTypeName = type.FullName;
+                var viewModelTypeName = type.FullName!;
                 var viewTypeName = GetViewTypeNameFromViewModelTypeName(viewModelTypeName);
                 var viewType = type.Assembly.GetType(viewTypeName);
-                return viewType;
+                return viewType!;
             };
         }
     }

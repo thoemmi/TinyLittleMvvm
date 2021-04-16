@@ -50,9 +50,9 @@ namespace TinyLittleMvvm {
         /// This allows the user of the library to remove the code-behind of her/his XAML files.
         /// </para>
         /// </remarks>
-        public object GetViewForViewModel<TViewModel>(IServiceProvider serviceProvider = null) {
+        public object GetViewForViewModel<TViewModel>(IServiceProvider? serviceProvider = null) {
             var viewModel = (serviceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
-            return GetViewForViewModel(viewModel, serviceProvider);
+            return GetViewForViewModel(viewModel!, serviceProvider);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace TinyLittleMvvm {
         /// This allows the user of the library to remove the code-behind of her/his XAML files.
         /// </para>
         /// </remarks>
-        public object GetViewForViewModel(object viewModel, IServiceProvider serviceProvider = null) {
+        public object GetViewForViewModel(object viewModel, IServiceProvider? serviceProvider = null) {
             _logger.LogDebug($"View for view model {viewModel.GetType()} requested");
             var viewType = _options.GetViewTypeFromViewModelType(viewModel.GetType());
             if (viewType == null) {
@@ -106,29 +106,29 @@ namespace TinyLittleMvvm {
 
         private static void AttachHandler(FrameworkElement view, object viewModel) {
             if (viewModel is IOnLoadedHandler onLoadedHandler) {
-                RoutedEventHandler handler = null;
-                handler = async (sender, args) => {
-                    view.Loaded -= handler;
+                async void OnLoadedEvent(object sender, RoutedEventArgs args) {
+                    view.Loaded -= OnLoadedEvent;
                     await onLoadedHandler.OnLoadedAsync();
-                };
-                view.Loaded += handler;
+                }
+
+                view.Loaded += OnLoadedEvent;
             }
 
             if (viewModel is IOnClosingHandler onClosingHandler) {
                 if (view is Window window) {
-                    CancelEventHandler handler = null;
-                    handler = (sender, args) => {
-                        window.Closing -= handler;
+                    void OnClosingEvent(object sender, CancelEventArgs args) {
+                        window.Closing -= OnClosingEvent;
                         onClosingHandler.OnClosing();
-                    };
-                    window.Closing += handler;
+                    }
+
+                    window.Closing += OnClosingEvent;
                 } else {
-                    RoutedEventHandler handler = null;
-                    handler = (sender, args) => {
-                        view.Unloaded -= handler;
+                    void OnUnloadedEvent(object sender, RoutedEventArgs args) {
+                        view.Unloaded -= OnUnloadedEvent;
                         onClosingHandler.OnClosing();
-                    };
-                    view.Unloaded += handler;
+                    }
+
+                    view.Unloaded += OnUnloadedEvent;
                 }
             }
 
@@ -136,17 +136,19 @@ namespace TinyLittleMvvm {
                 if (!(view is Window window)) {
                     throw new ArgumentException("If a view model implements ICancelableOnClosingHandler, the corresponding view must be a window.");
                 }
-                CancelEventHandler closingHandler = null;
-                closingHandler = (sender, args) => {
+
+                void OnClosingEvent(object sender, CancelEventArgs args) {
                     args.Cancel = cancelableOnClosingHandler.OnClosing();
-                };
-                window.Closing += closingHandler;
-                EventHandler closedHandler = null;
-                closedHandler = (sender, args) => {
-                    window.Closing -= closingHandler;
-                    window.Closed -= closedHandler;
-                };
-                window.Closed += closedHandler;
+                }
+
+                window.Closing += OnClosingEvent;
+
+                void OnClosedHandler(object? sender, EventArgs args) {
+                    window.Closing -= OnClosingEvent;
+                    window.Closed -= OnClosedHandler;
+                }
+
+                window.Closed += OnClosedHandler;
             }
         }
 

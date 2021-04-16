@@ -10,7 +10,7 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// Gets the name of a class' property.
         /// </summary>
-        /// <param name="property">The porperty.</param>
+        /// <param name="property">The property.</param>
         /// <typeparam name="TProperty">The type of the property.</typeparam>
         /// <returns>The name of the property.</returns>
         public static string GetMemberName<TProperty>(Expression<Func<TProperty>> property) {
@@ -20,7 +20,7 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// Gets the name of a class' property.
         /// </summary>
-        /// <param name="property">The porperty.</param>
+        /// <param name="property">The property.</param>
         /// <typeparam name="TEntity">The type of the class owning the property.</typeparam>
         /// <typeparam name="TProperty">The type of the property.</typeparam>
         /// <returns>The name of the property.</returns>
@@ -31,9 +31,11 @@ namespace TinyLittleMvvm {
         private static MemberInfo GetMemberInfo(Expression expression) {
             var lambdaExpression = (LambdaExpression) expression;
             return
-                (!(lambdaExpression.Body is UnaryExpression)
-                    ? (MemberExpression) lambdaExpression.Body : (MemberExpression) ((UnaryExpression) lambdaExpression.Body).Operand)
-                    .Member;
+                (lambdaExpression.Body is UnaryExpression unaryExpression
+                    ? (MemberExpression) unaryExpression.Operand
+                    : (MemberExpression) lambdaExpression.Body
+                )
+                .Member;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace TinyLittleMvvm {
             _viewLocator = viewLocator;
         }
 
-        public Window ShowWindow<TViewModel>(Window owningWindow = null, IServiceScope scope = null) {
+        public Window ShowWindow<TViewModel>(Window? owningWindow = null, IServiceScope? scope = null) {
             var serviceProvider = scope?.ServiceProvider
                                   ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
                                   ?? _serviceProvider;
@@ -23,7 +23,7 @@ namespace TinyLittleMvvm {
             return window;
         }
 
-        public Window ShowWindow(object viewModel, Window owningWindow = null, IServiceScope scope = null) {
+        public Window ShowWindow(object viewModel, Window? owningWindow = null, IServiceScope? scope = null) {
             var serviceProvider = scope?.ServiceProvider
                                   ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
                                   ?? _serviceProvider;
@@ -34,12 +34,12 @@ namespace TinyLittleMvvm {
             return window;
         }
 
-        public (bool?, TViewModel) ShowDialog<TViewModel>(Window owningWindow = null, IServiceScope scope = null) {
+        public (bool?, TViewModel) ShowDialog<TViewModel>(Window? owningWindow = null, IServiceScope? scope = null) {
             var serviceProvider = scope?.ServiceProvider
                                   ?? (owningWindow != null ? ServiceProviderPropertyExtension.GetServiceProvider(owningWindow) : null)
                                   ?? _serviceProvider;
 
-            var viewModel = (serviceProvider ?? _serviceProvider).GetRequiredService<TViewModel>();
+            var viewModel = serviceProvider.GetRequiredService<TViewModel>()!;
 
             var window = (Window)_viewLocator.GetViewForViewModel(viewModel, serviceProvider);
             window.Owner = owningWindow;

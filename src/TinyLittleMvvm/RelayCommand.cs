@@ -12,7 +12,7 @@ namespace TinyLittleMvvm {
     /// </summary>
     public class RelayCommand : ICommand {
         private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
+        private readonly Func<bool>? _canExecute;
 
         /// <summary>
         /// Initializes a new instance of the RelayCommand class.
@@ -20,18 +20,15 @@ namespace TinyLittleMvvm {
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         /// <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
-        public RelayCommand(Action execute, Func<bool> canExecute = null) {
-            if (execute == null) {
-                throw new ArgumentNullException(nameof(execute));
-            }
-            _execute = execute;
+        public RelayCommand(Action execute, Func<bool>? canExecute = null) {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged {
+        public event EventHandler? CanExecuteChanged {
             add {
                 if (_canExecute != null) {
                     CommandManager.RequerySuggested += value;
@@ -59,7 +56,7 @@ namespace TinyLittleMvvm {
         /// true if this command can be executed; otherwise, false.
         /// </returns>
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter) {
+        public bool CanExecute(object? parameter) {
             return _canExecute == null || _canExecute();
         }
 
@@ -67,7 +64,7 @@ namespace TinyLittleMvvm {
         /// Defines the method to be called when the command is invoked.
         /// </summary>
         /// <param name="parameter">This parameter will always be ignored.</param>
-        public void Execute(object parameter) {
+        public void Execute(object? parameter) {
             _execute();
         }
     }
@@ -80,8 +77,8 @@ namespace TinyLittleMvvm {
     /// </summary>
     public class AsyncRelayCommand : ICommand {
         private readonly Func<Task> _execute;
-        private readonly Func<bool> _canExecute;
-        private Task _task;
+        private readonly Func<bool>? _canExecute;
+        private Task? _task;
 
         /// <summary>
         /// Initializes a new instance of the RelayCommand class.
@@ -89,20 +86,17 @@ namespace TinyLittleMvvm {
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         /// <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
-        public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null) {
-            if (execute == null) {
-                throw new ArgumentNullException(nameof(execute));
-            }
-            _execute = execute;
+        public AsyncRelayCommand(Func<Task> execute, Func<bool>? canExecute = null) {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+        public event EventHandler? CanExecuteChanged {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
         /// <summary>
@@ -120,7 +114,7 @@ namespace TinyLittleMvvm {
         /// true if this command can be executed; otherwise, false.
         /// </returns>
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter) {
+        public bool CanExecute(object? parameter) {
             return (_canExecute == null || _canExecute()) && (_task == null || _task.IsCompleted);
         }
 
@@ -128,7 +122,7 @@ namespace TinyLittleMvvm {
         /// Defines the method to be called when the command is invoked.
         /// </summary>
         /// <param name="parameter">This parameter will always be ignored.</param>
-        public async void Execute(object parameter) {
+        public async void Execute(object? parameter) {
             _task = _execute();
             RaiseCanExecuteChanged();
             await _task;
@@ -145,7 +139,7 @@ namespace TinyLittleMvvm {
     /// <typeparam name="T">The type of the command parameter.</typeparam>
     public class RelayCommand<T> : ICommand {
         private readonly Action<T> _execute;
-        private readonly Func<T, bool> _canExecute;
+        private readonly Func<T, bool>? _canExecute;
 
         /// <summary>
         /// Initializes a new instance of the RelayCommand class.
@@ -153,19 +147,15 @@ namespace TinyLittleMvvm {
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         /// <exception cref="ArgumentNullException">If the execute argument is null.</exception>
-        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null) {
-            if (execute == null) {
-                throw new ArgumentNullException(nameof(execute));
-            }
-
-            _execute = execute;
+        public RelayCommand(Action<T> execute, Func<T, bool>? canExecute = null) {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged {
+        public event EventHandler? CanExecuteChanged {
             add {
                 if (_canExecute != null) {
                     CommandManager.RequerySuggested += value;
@@ -192,8 +182,8 @@ namespace TinyLittleMvvm {
         /// <param name="parameter">Data used by the command. If the command does not require data 
         /// to be passed, this object can be set to a null reference</param>
         /// <returns>true if this command can be executed; otherwise, false.</returns>
-        public bool CanExecute(object parameter) {
-            return parameter is T && (_canExecute == null || _canExecute((T)parameter));
+        public bool CanExecute(object? parameter) {
+            return parameter is T t && (_canExecute == null || _canExecute(t));
         }
 
         /// <summary>
@@ -201,9 +191,9 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="parameter">Data used by the command. If the command does not require data 
         /// to be passed, this object can be set to a null reference</param>
-        public void Execute(object parameter) {
+        public void Execute(object? parameter) {
             if (CanExecute(parameter)) {
-                _execute((T)parameter);
+                _execute((T)parameter!);
             }
         }
     }
@@ -217,8 +207,8 @@ namespace TinyLittleMvvm {
     /// <typeparam name="T">The type of the command parameter.</typeparam>
     public class AsyncRelayCommand<T> : ICommand {
         private readonly Func<T, Task> _execute;
-        private readonly Func<T, bool> _canExecute;
-        private Task _task;
+        private readonly Func<T, bool>? _canExecute;
+        private Task? _task;
 
         /// <summary>
         /// Initializes a new instance of the RelayCommand class.
@@ -226,21 +216,17 @@ namespace TinyLittleMvvm {
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         /// <exception cref="ArgumentNullException">If the execute argument is null.</exception>
-        public AsyncRelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null) {
-            if (execute == null) {
-                throw new ArgumentNullException(nameof(execute));
-            }
-
-            _execute = execute;
+        public AsyncRelayCommand(Func<T, Task> execute, Func<T, bool>? canExecute = null) {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+        public event EventHandler? CanExecuteChanged {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
         /// <summary>
@@ -256,8 +242,8 @@ namespace TinyLittleMvvm {
         /// <param name="parameter">Data used by the command. If the command does not require data 
         /// to be passed, this object can be set to a null reference</param>
         /// <returns>true if this command can be executed; otherwise, false.</returns>
-        public bool CanExecute(object parameter) {
-            return parameter is T && (_canExecute == null || _canExecute((T)parameter)) && (_task == null || _task.IsCompleted);
+        public bool CanExecute(object? parameter) {
+            return parameter is T t && (_canExecute == null || _canExecute(t)) && (_task == null || _task.IsCompleted);
         }
 
         /// <summary>
@@ -265,9 +251,9 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="parameter">Data used by the command. If the command does not require data 
         /// to be passed, this object can be set to a null reference</param>
-        public async void Execute(object parameter) {
+        public async void Execute(object? parameter) {
             if (CanExecute(parameter)) {
-                _task = _execute((T)parameter);
+                _task = _execute((T)parameter!);
                 RaiseCanExecuteChanged();
                 await _task;
                 RaiseCanExecuteChanged();

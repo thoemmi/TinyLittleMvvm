@@ -10,12 +10,12 @@ namespace TinyLittleMvvm {
     /// A base class for <see cref="DialogViewModel"/> providing validation.
     /// </summary>
     public abstract class ValidationPropertyChangedBase : PropertyChangedBase, INotifyDataErrorInfo {
-        private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
-        private readonly Dictionary<string, List<ValidationRule>> _validationRules = new Dictionary<string, List<ValidationRule>>();
+        private readonly Dictionary<string, List<string>> _errors = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<ValidationRule>> _validationRules = new();
 
         private class ValidationRule {
-            public string ErrorMessage { get; set; }
-            public Func<bool> IsValid { get; set; }
+            public string ErrorMessage { get; set; } = null!;
+            public Func<bool> IsValid { get; set; } = null!;
         }
 
         /// <summary>
@@ -36,8 +36,7 @@ namespace TinyLittleMvvm {
                 }
             };
 
-            List<ValidationRule> ruleSet;
-            if (!_validationRules.TryGetValue(propertyName, out ruleSet)) {
+            if (!_validationRules.TryGetValue(propertyName, out List<ValidationRule>? ruleSet)) {
                 ruleSet = new List<ValidationRule>();
                 _validationRules.Add(propertyName, ruleSet);
             }
@@ -52,10 +51,9 @@ namespace TinyLittleMvvm {
         /// </returns>
         /// <param name="propertyName">The name of the property to retrieve validation errors for;
         /// or null or <see cref="F:System.String.Empty"/>, to retrieve entity-level errors.</param>
-        public IEnumerable GetErrors(string propertyName) {
-            if (!String.IsNullOrEmpty(propertyName)) {
-                List<string> propertyErrors;
-                return _errors.TryGetValue(propertyName, out propertyErrors) ? propertyErrors : null;
+        public IEnumerable GetErrors(string? propertyName) {
+            if (propertyName != null && !string.IsNullOrEmpty(propertyName)) {
+                return _errors.TryGetValue(propertyName, out List<string>? propertyErrors) ? propertyErrors : Array.Empty<string>();
             } else {
                 return _errors.SelectMany(err => err.Value.ToList());
             }
@@ -65,14 +63,13 @@ namespace TinyLittleMvvm {
         /// Raises the <see cref="PropertyChangedBase.PropertyChanged"/> event.
         /// </summary>
         /// <param name="propertyName">The name of the changed property.</param>
-        protected override void NotifyOfPropertyChange(string propertyName = null) {
+        protected override void NotifyOfPropertyChange(string? propertyName = null) {
             base.NotifyOfPropertyChange(propertyName);
 
-            if (String.IsNullOrEmpty(propertyName)) {
+            if (propertyName == null || string.IsNullOrEmpty(propertyName)) {
                 ValidateAllRules();
             } else {
-                List<ValidationRule> ruleSet;
-                if (_validationRules.TryGetValue(propertyName, out ruleSet)) {
+                if (_validationRules.TryGetValue(propertyName, out List<ValidationRule>? ruleSet)) {
                     foreach (var rule in ruleSet) {
                         if (rule.IsValid()) {
                             RemoveError(propertyName, rule.ErrorMessage);
@@ -112,7 +109,7 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// Occurs when the validation errors have changed for a property or for the entire entity.
         /// </summary>
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         /// <summary>
         /// Called when the validation state of a property has changed.
@@ -163,8 +160,7 @@ namespace TinyLittleMvvm {
         /// <param name="propertyName">The name of the validated property.</param>
         /// <param name="error">The error message.</param>
         protected void AddError(string propertyName, string error) {
-            List<string> propertyErrors;
-            if (!_errors.TryGetValue(propertyName, out propertyErrors)) {
+            if (!_errors.TryGetValue(propertyName, out List<string>? propertyErrors)) {
                 propertyErrors = new List<string>();
                 _errors.Add(propertyName, propertyErrors);
             }
@@ -190,8 +186,7 @@ namespace TinyLittleMvvm {
         /// <param name="propertyName">The name of the validated property.</param>
         /// <param name="error">The error message.</param>
         protected void RemoveError(string propertyName, string error) {
-            List<string> propertyErrors;
-            if (_errors.TryGetValue(propertyName, out propertyErrors)) {
+            if (_errors.TryGetValue(propertyName, out List<string>? propertyErrors)) {
                 if (propertyErrors.Contains(error)) {
                     propertyErrors.Remove(error);
                     if (!propertyErrors.Any()) {

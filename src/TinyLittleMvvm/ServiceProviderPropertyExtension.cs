@@ -22,7 +22,7 @@ namespace TinyLittleMvvm {
         /// </summary>
         /// <param name="element">The dependency object.</param>
         /// <param name="value">The <see cref="IServiceProvider"/>to attach to <paramref name="element"/>.</param>
-        public static void SetServiceProvider(DependencyObject element, IServiceProvider value) {
+        public static void SetServiceProvider(DependencyObject element, IServiceProvider? value) {
             element.SetValue(ServiceProviderProperty, value);
         }
 
@@ -30,7 +30,7 @@ namespace TinyLittleMvvm {
         /// Gets the <see cref="IServiceProvider"/> attached to <paramref name="element"/>.
         /// </summary>
         /// <param name="element"></param>
-        public static IServiceProvider GetServiceProvider(DependencyObject element) {
+        public static IServiceProvider? GetServiceProvider(DependencyObject element) {
             return (IServiceProvider) element.GetValue(ServiceProviderProperty);
         }
     }

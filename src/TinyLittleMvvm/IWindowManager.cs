@@ -13,7 +13,7 @@ namespace TinyLittleMvvm {
         /// <param name="scope">Optional IoC scope for the window.</param>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <returns>The window.</returns>
-        Window ShowWindow<TViewModel>(Window owningWindow = null, IServiceScope scope = null);
+        Window ShowWindow<TViewModel>(Window? owningWindow = null, IServiceScope? scope = null);
 
         /// <summary>
         /// Shows a window for a given view model object.
@@ -22,7 +22,7 @@ namespace TinyLittleMvvm {
         /// <param name="owningWindow">An optional owner for the new window.</param>
         /// <param name="scope">Optional IoC scope for the window.</param>
         /// <returns>The window.</returns>
-        Window ShowWindow(object viewModel, Window owningWindow = null, IServiceScope scope = null);
+        Window ShowWindow(object viewModel, Window? owningWindow = null, IServiceScope? scope = null);
 
         /// <summary>
         /// Shows a window for a given view model type as a Dialog.
@@ -31,6 +31,6 @@ namespace TinyLittleMvvm {
         /// <param name="scope">Optional IoC scope for the window.</param>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <returns>A tuple composed of the result of <see cref="Window.ShowDialog()">ShowDialog</see> and the view model.</returns>
-        (bool?, TViewModel) ShowDialog<TViewModel>(Window owningWindow = null, IServiceScope scope = null);
+        (bool?, TViewModel) ShowDialog<TViewModel>(Window? owningWindow = null, IServiceScope? scope = null);
     }
 }
