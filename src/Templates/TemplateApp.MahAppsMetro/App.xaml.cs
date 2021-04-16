@@ -44,8 +44,7 @@ namespace TemplateApp.MahAppsMetro {
             services.AddTinyLittleMvvm();
             services.AddTinyLittleMvvmForMahAppsMetro();
 
-            services.AddSingleton<MainView>();
-            services.AddSingleton<MainViewModel>();
+            services.AddMvvmSingleton<MainViewModel, MainView>();
         }
     }
 }

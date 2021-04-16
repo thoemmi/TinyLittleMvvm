@@ -42,8 +42,7 @@ namespace TemplateApp {
         private void ConfigureServices(IServiceCollection services) {
             services.AddTinyLittleMvvm();
 
-            services.AddSingleton<MainView>();
-            services.AddSingleton<MainViewModel>();
+            services.AddMvvmSingleton<MainViewModel, MainView>();
         }
     }
 }

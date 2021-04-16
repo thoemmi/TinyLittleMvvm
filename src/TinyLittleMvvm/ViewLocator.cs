@@ -11,18 +11,17 @@ namespace TinyLittleMvvm {
     /// </summary>
     public class ViewLocator {
         private readonly IServiceProvider _serviceProvider;
-        private readonly ViewLocatorOptions _options;
+        private readonly ViewModelRegistry _viewModelRegistry;
         private readonly ILogger<ViewLocator> _logger;
 
         /// <summary>
         /// Creates a new <see cref="ViewLocator"/> instance.
         /// </summary>
         /// <param name="serviceProvider">The service provider.</param>
-        /// <param name="options">The options for ViewModel discovery.</param>
         /// <param name="logger">The logger.</param>
-        public ViewLocator(IServiceProvider serviceProvider, ViewLocatorOptions options, ILogger<ViewLocator> logger) {
+        public ViewLocator(IServiceProvider serviceProvider, ILogger<ViewLocator> logger) {
             _serviceProvider = serviceProvider;
-            _options = options;
+            _viewModelRegistry = serviceProvider.GetRequiredService<ViewModelRegistry>();
             _logger = logger;
         }
 
@@ -35,10 +34,6 @@ namespace TinyLittleMvvm {
         /// <returns>The view matching the view model.</returns>
         /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC container.</exception>
         /// <remarks>
-        /// <para>
-        /// To get the correct view type of the given <typeparamref name="TViewModel"/>, this method will
-        /// call <see cref="ViewLocatorOptions.GetViewTypeFromViewModelType"/>.
-        /// </para>
         /// <para>
         /// If <typeparamref name="TViewModel"/> implements <see cref="IOnLoadedHandler"/> or <see cref="IOnClosingHandler"/>,
         /// this method will register the view's corresponding events and call <see cref="IOnLoadedHandler.OnLoadedAsync"/>
@@ -65,10 +60,6 @@ namespace TinyLittleMvvm {
         /// <exception cref="InvalidOperationException">Thrown when the view cannot be found in the IoC container.</exception>
         /// <remarks>
         /// <para>
-        /// To get the correct view type of the passed <paramref name="viewModel"/>, this method will
-        /// call <see cref="ViewLocatorOptions.GetViewTypeFromViewModelType"/>.
-        /// </para>
-        /// <para>
         /// If the <paramref name="viewModel"/> implements <see cref="IOnLoadedHandler"/> or <see cref="IOnClosingHandler"/>,
         /// this method will register the view's corresponding events and call <see cref="IOnLoadedHandler.OnLoadedAsync"/>
         /// and <see cref="IOnClosingHandler.OnClosing"/> respectively when those events are raised.
@@ -81,8 +72,7 @@ namespace TinyLittleMvvm {
         /// </remarks>
         public object GetViewForViewModel(object viewModel, IServiceProvider? serviceProvider = null) {
             _logger.LogDebug($"View for view model {viewModel.GetType()} requested");
-            var viewType = _options.GetViewTypeFromViewModelType(viewModel.GetType());
-            if (viewType == null) {
+            if (!_viewModelRegistry.ViewModelTypeTo2ViewType.TryGetValue(viewModel.GetType(), out var viewType)) {
                 _logger.LogError($"Could not find view for view model type {viewModel.GetType()}");
                 throw new InvalidOperationException("No View found for ViewModel of type " + viewModel.GetType());
             }

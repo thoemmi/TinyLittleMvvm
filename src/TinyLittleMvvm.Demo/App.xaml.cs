@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,11 +15,8 @@ namespace TinyLittleMvvm.Demo {
         private readonly IHost _host;
 
         public App() {
-            _host = new HostBuilder()
-                .ConfigureAppConfiguration((context, configurationBuilder) => {
-                    configurationBuilder.SetBasePath(context.HostingEnvironment.ContentRootPath);
-                    configurationBuilder.AddJsonFile("appsettings.json", optional: true);
-                })
+            _host = Host
+                .CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
                     services
                         .AddTinyLittleMvvm()
@@ -49,20 +45,12 @@ namespace TinyLittleMvvm.Demo {
         }
 
         private void ConfigureServices(IServiceCollection services) {
-            services.AddSingleton<MainView>();
-            services.AddSingleton<MainViewModel>();
-
-            services.AddTransient<SampleDialogView>();
-            services.AddTransient<SampleDialogViewModel>();
-
-            services.AddTransient<SampleFlyoutView>();
-            services.AddTransient<SampleFlyoutViewModel>();
-
-            services.AddTransient<SampleSubView>();
-            services.AddTransient<SampleSubViewModel>();
-
-            services.AddTransient<WindowView>();
-            services.AddTransient<WindowViewModel>();
+            services
+                .AddMvvmSingleton<MainViewModel, MainView>()
+                .AddMvvmTransient<SampleDialogViewModel, SampleDialogView>()
+                .AddMvvmTransient<SampleFlyoutViewModel, SampleFlyoutView>()
+                .AddMvvmTransient<SampleSubViewModel, SampleSubView>()
+                .AddMvvmTransient<WindowViewModel, WindowView>();
 
             services.AddScoped<ScopedService>();
         }
