@@ -15,6 +15,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- including PDB files in NuGet for source link because symbolsource.org does not support portable PDBs -->
