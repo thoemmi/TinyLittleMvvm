@@ -49,12 +49,13 @@ namespace TinyLittleMvvm {
 
         public MessageBoxResult ShowMessageBox(string messageBoxText, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None)
         {
-            var title = Application.Current.MainWindow?.Title;
+            var title = Application.Current?.MainWindow?.Title;
             return (MessageBoxResult)MessageBox.Show(messageBoxText, title, (System.Windows.MessageBoxButton)button, (System.Windows.MessageBoxImage)icon);
         }
 
-        public void ShutdownApplication(int exitCode = 0)
-        {
+        public void ShutdownApplication(int exitCode = 0) {
+            if (Application.Current == null) throw new InvalidOperationException("There's no application to shut down.");
+
             Application.Current.Shutdown(exitCode);
         }
     }
