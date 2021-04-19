@@ -18,7 +18,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
                 })
                 .ToList();
             var theme = ThemeManager.Current.DetectTheme(Application.Current);
-            _currentAccentColor = AccentColors.Single(accent => accent.Name == theme.ColorScheme);
+            _currentAccentColor = AccentColors.SingleOrDefault(accent => accent.Name == theme?.ColorScheme) ?? AccentColors.First();
 
             OkCommand = new RelayCommand(OnOk, () => !HasErrors);
             CancelCommand = new RelayCommand(Close);
@@ -46,7 +46,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
     }
 
     public class AccentColorMenuData {
-        public string Name { get; set; }
-        public Brush ColorBrush { get; set; }
+        public string Name { get; set; } = null!;
+        public Brush ColorBrush { get; set; } = null!;
     }
 }

@@ -75,7 +75,7 @@ namespace TinyLittleMvvm.Demo.ViewModels {
 
         private async Task OnShowSampleDialogAsync() {
             using (var scope = _serviceProvider.CreateScope()) {
-                var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string>(serviceScope:scope);
+                var text = await _dialogManager.ShowDialogAsync<SampleDialogViewModel, string?>(serviceScope:scope);
                 if (text != null) {
                     await _dialogManager.ShowMessageBox(Title, "You entered: " + text);
                 }

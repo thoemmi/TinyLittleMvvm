@@ -4,7 +4,7 @@ namespace TinyLittleMvvm.Demo.ViewModels
 {
     public class WindowViewModel : PropertyChangedBase, IOnLoadedHandler
     {
-        private string _text;
+        private string _text = string.Empty;
 
         public string Text
         {
