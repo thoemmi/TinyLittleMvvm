@@ -6,10 +6,6 @@
     <PackageTags>MVVM;MahApps Metro;MahApps.Metro;WPF</PackageTags>
     <Description>A small opinionated MVVM library with MahApps.Metro</Description>
 
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

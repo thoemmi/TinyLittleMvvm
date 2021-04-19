@@ -6,5 +6,10 @@
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/thoemmi/TinyLittleMvvm</RepositoryUrl>
+
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
   </PropertyGroup>
 </Project>

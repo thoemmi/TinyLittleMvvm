@@ -1,15 +1,14 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace TinyLittleMvvm.Demo.ViewModels {
-    public class SampleDialogViewModel : DialogViewModel<string> {
-        private string _text;
+    public class SampleDialogViewModel : DialogViewModel<string?> {
+        private string _text = string.Empty;
 
         public SampleDialogViewModel(ScopedService scopedService) {
             OkCommand = new RelayCommand(OnOk, CanOk);
             CancelCommand = new RelayCommand(OnCancel);
 
-            AddValidationRule(() => Text, text => !String.IsNullOrEmpty(text), "Text must not be empty");
+            AddValidationRule(() => Text, text => !string.IsNullOrEmpty(text), "Text must not be empty");
         }
 
         public string Text {
