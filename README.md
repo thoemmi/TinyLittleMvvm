@@ -32,6 +32,7 @@ applications using [MahApps.Metro](http://mahapps.com/).
 - Logging via [`ILogger`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)
 
 
+
 ## Builds and Packages
 
 | Channel  | Build | NuGet Package |
