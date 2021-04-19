@@ -46,5 +46,16 @@ namespace TinyLittleMvvm {
             var result = window.ShowDialog();
             return (result, viewModel);
         }
+
+        public MessageBoxResult ShowMessageBox(string messageBoxText, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None)
+        {
+            var title = Application.Current.MainWindow?.Title;
+            return (MessageBoxResult)MessageBox.Show(messageBoxText, title, (System.Windows.MessageBoxButton)button, (System.Windows.MessageBoxImage)icon);
+        }
+
+        public void ShutdownApplication(int exitCode = 0)
+        {
+            Application.Current.Shutdown(exitCode);
+        }
     }
 }
