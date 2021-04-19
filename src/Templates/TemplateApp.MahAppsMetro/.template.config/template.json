@@ -1,15 +1,15 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Thomas Freudenberg",
-  "classifications": ["Common", "WPF", "MVVM"],
-  "identity": "TinyLittleMvvm.Template",
-  "name": "WPF application using TinyLittleMvvm",
-  "shortName": "tinylittlemvvm",
+  "classifications": [ "Common", "WPF", "MVVM", "MahApps.Metro" ],
+  "identity": "TinyLittleMvvm.Template.MahAppsMetro",
+  "name": "WPF application using TinyLittleMvvm and MahApps.Metro",
+  "shortName": "tinylittlemvvm-mam",
   "tags": {
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "TemplateApp",
+  "sourceName": "TemplateApp.MahAppsMetro",
   "postActions": [
     {
       "condition": "(!skipRestore)",

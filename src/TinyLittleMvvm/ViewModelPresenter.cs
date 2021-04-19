@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TinyLittleMvvm {
@@ -41,15 +40,15 @@ namespace TinyLittleMvvm {
         }
 
         private static IServiceProvider GetServiceProvider(DependencyObject dependencyObject) {
+            var runner = dependencyObject;
             do {
-                var serviceProvider = ServiceProviderPropertyExtension.GetServiceProvider(dependencyObject);
+                var serviceProvider = ServiceProviderPropertyExtension.GetServiceProvider(runner);
                 if (serviceProvider != null) {
                     return serviceProvider;
                 }
 
-                dependencyObject = dependencyObject.GetParentObject();
-            }
-            while (dependencyObject != null);
+                runner = runner.GetParentObject();
+            } while (runner != null);
 
             throw new Exception("Could not locate IServiceProvider in visual tree.");
         }

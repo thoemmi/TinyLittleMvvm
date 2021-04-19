@@ -3,11 +3,12 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TemplateApp.MahAppsMetro.ViewModels;
+using TemplateApp.MahAppsMetro.Views;
 using TinyLittleMvvm;
-using TemplateApp.ViewModels;
-using TemplateApp.Views;
+using TinyLittleMvvm.MahAppsMetro;
 
-namespace TemplateApp {
+namespace TemplateApp.MahAppsMetro {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -41,6 +42,7 @@ namespace TemplateApp {
 
         private void ConfigureServices(IServiceCollection services) {
             services.AddTinyLittleMvvm();
+            services.AddTinyLittleMvvmForMahAppsMetro();
 
             services.AddMvvmSingleton<MainViewModel, MainView>();
         }

@@ -11,24 +11,24 @@ namespace TinyLittleMvvm {
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Notifies clients that all properties may have changed.
         /// </summary>
         /// <remarks>
-        /// This method raises the <see cref="PropertyChanged"/> event with <see cref="String.Empty"/> as the property name.
+        /// This method raises the <see cref="PropertyChanged"/> event with <see cref="string.Empty"/> as the property name.
         /// </remarks>
         protected void Refresh() {
             CommandManager.InvalidateRequerySuggested();
-            NotifyOfPropertyChange(String.Empty);
+            NotifyOfPropertyChange(string.Empty);
         }
 
         /// <summary>
         /// Raises the <see cref="PropertyChanged"/> event.
         /// </summary>
         /// <param name="propertyName">The name of the changed property.</param>
-        protected virtual void NotifyOfPropertyChange(string propertyName = null) {
+        protected virtual void NotifyOfPropertyChange(string? propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

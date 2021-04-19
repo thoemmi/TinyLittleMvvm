@@ -5,7 +5,7 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TinyLittleMvvm {
+namespace TinyLittleMvvm.MahAppsMetro {
     internal class FlyoutManager : ObservableCollection<Flyout>, IFlyoutManager {
         private readonly ViewLocator _viewLocator;
         private readonly IServiceProvider _serviceProvider;
@@ -48,20 +48,19 @@ namespace TinyLittleMvvm {
 
             flyout.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml") });
 
-            EventHandler closedHandler = null;
-            closedHandler = (sender, args) => {
-                viewModel.Closed -= closedHandler;
+            void OnClosedEvent(object? sender, EventArgs args) {
+                viewModel.Closed -= OnClosedEvent;
                 flyout.IsOpen = false;
+            }
 
-            };
-            viewModel.Closed += closedHandler;
+            viewModel.Closed += OnClosedEvent;
 
-            RoutedEventHandler closingFinishedHandler = null;
-            closingFinishedHandler = (o, eventArgs) => {
-                flyout.ClosingFinished -= closingFinishedHandler;
+            void OnClosingFinishedEvent(object o, RoutedEventArgs eventArgs) {
+                flyout.ClosingFinished -= OnClosingFinishedEvent;
                 Remove(flyout);
-            };
-            flyout.ClosingFinished += closingFinishedHandler;
+            }
+
+            flyout.ClosingFinished += OnClosingFinishedEvent;
 
             Add(flyout);
         }
