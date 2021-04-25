@@ -43,6 +43,7 @@ jobs:
         run: |
           cd src
           dotnet pack TinyLittleMvvm/TinyLittleMvvm.csproj --configuration Release --no-build --output .
+          dotnet pack TinyLittleMvvm.Analyzers/TinyLittleMvvm.Analyzers.csproj --configuration Release --no-build --output .
           dotnet pack TinyLittleMvvm.MahAppsMetro/TinyLittleMvvm.MahAppsMetro.csproj --configuration Release --no-build --output .
           dotnet pack Templates\templatepack.csproj --configuration Release --no-build --output .
   
