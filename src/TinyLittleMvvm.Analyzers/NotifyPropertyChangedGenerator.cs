@@ -8,6 +8,15 @@ using Microsoft.CodeAnalysis.Text;
 namespace TinyLittleMvvm.Analyzers {
     [Generator]
     public class NotifyPropertyChangedGenerator : ISourceGenerator {
+#pragma warning disable RS2008 // Enable analyzer release tracking
+        private static readonly DiagnosticDescriptor DoesNotDeriveFromPropertyChangedBaseError = new(id: "TLM001",
+            title: "Must implement base class",
+            messageFormat: "AutoNotify is disabled for class '{0}' because it does not derive from '{1}'",
+            category: "TinyLittleMvvm",
+            DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
+#pragma warning restore RS2008 // Enable analyzer release tracking
+
         private const string attributeText = @"
 using System;
 namespace TinyLittleMvvm
@@ -63,12 +72,16 @@ namespace TinyLittleMvvm
             }
 
             var baseType = classSymbol.BaseType;
-            while (!SymbolEqualityComparer.Default.Equals(baseType, notifySymbol)) {
-                if (baseType == null) {
-                    return null; // TODO issue a diagnostic that it must inherit from TinyLittleMvvm.PropertyChangedBase
-                }
-
+            var ok = false;
+            while (baseType != null)
+            {
+                ok |= SymbolEqualityComparer.Default.Equals(baseType, notifySymbol);
                 baseType = baseType.BaseType;
+            }
+            if (!ok)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DoesNotDeriveFromPropertyChangedBaseError, classSymbol.Locations.FirstOrDefault(), classSymbol.ToDisplayString(), notifySymbol.ToDisplayString()));
+                return null; // TODO issue a diagnostic that it must inherit from TinyLittleMvvm.PropertyChangedBase
             }
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
