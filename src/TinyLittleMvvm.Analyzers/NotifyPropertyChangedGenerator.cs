@@ -8,6 +8,15 @@ using Microsoft.CodeAnalysis.Text;
 namespace TinyLittleMvvm.Analyzers {
     [Generator]
     public class NotifyPropertyChangedGenerator : ISourceGenerator {
+#pragma warning disable RS2008 // Enable analyzer release tracking
+        private static readonly DiagnosticDescriptor DoesNotDeriveFromPropertyChangedBaseError = new(id: "TLM001",
+            title: "Must implement base class",
+            messageFormat: "AutoNotify is disabled for class '{0}' because it does not derive from '{1}'",
+            category: "TinyLittleMvvm",
+            DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
+#pragma warning restore RS2008 // Enable analyzer release tracking
+
         private const string attributeText = @"
 using System;
 namespace TinyLittleMvvm
@@ -20,6 +29,7 @@ namespace TinyLittleMvvm
         {
         }
         public string? PropertyName { get; set; }
+        public string[]? AffectedProperties { get; set; }
     }
 }
 ";
@@ -41,7 +51,7 @@ namespace TinyLittleMvvm
 
             // get the added attribute, and INotifyPropertyChanged
             var attributeSymbol = context.Compilation.GetTypeByMetadataName("TinyLittleMvvm.AutoNotifyAttribute")!;
-            var notifySymbol = context.Compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged")!;
+            var notifySymbol = context.Compilation.GetTypeByMetadataName("TinyLittleMvvm.PropertyChangedBase")!;
 
             // group the fields by class, and generate the source
             foreach (var group in receiver.Fields.GroupBy(f => f.ContainingType, SymbolEqualityComparer.Default))
@@ -54,11 +64,24 @@ namespace TinyLittleMvvm
             }
         }
 
-        private string? ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IFieldSymbol> fields, ISymbol attributeSymbol, ISymbol notifySymbol, GeneratorExecutionContext context)
+        private string? ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IFieldSymbol> fields, ISymbol attributeSymbol, INamedTypeSymbol notifySymbol, GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
                 return null; //TODO: issue a diagnostic that it must be top level
+            }
+
+            var baseType = classSymbol.BaseType;
+            var ok = false;
+            while (baseType != null)
+            {
+                ok |= SymbolEqualityComparer.Default.Equals(baseType, notifySymbol);
+                baseType = baseType.BaseType;
+            }
+            if (!ok)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DoesNotDeriveFromPropertyChangedBaseError, classSymbol.Locations.FirstOrDefault(), classSymbol.ToDisplayString(), notifySymbol.ToDisplayString()));
+                return null; // TODO issue a diagnostic that it must inherit from TinyLittleMvvm.PropertyChangedBase
             }
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
@@ -67,15 +90,9 @@ namespace TinyLittleMvvm
             var source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    public partial class {classSymbol.Name} : {notifySymbol.ToDisplayString()}
+    public partial class {classSymbol.Name}
     {{
 ");
-
-            // if the class doesn't implement INotifyPropertyChanged already, add it
-            if (!classSymbol.AllInterfaces.Contains(notifySymbol, SymbolEqualityComparer.Default))
-            {
-                source.Append("public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;");
-            }
 
             // create properties for each field 
             foreach (var fieldSymbol in fields)
@@ -105,7 +122,7 @@ namespace {namespaceName}
                 return;
             }
 
-            source.Append($@"
+            source.AppendLine($@"
         public {fieldType} {propertyName}
         {{
             get 
@@ -114,12 +131,21 @@ namespace {namespaceName}
             }}
             set
             {{
-                if (!EqualityComparer<{fieldType}>.Default.Equals(this.{fieldName}, value))
+                if (!System.Collections.Generic.EqualityComparer<{fieldType}>.Default.Equals(this.{fieldName}, value))
                 {{
                     var oldValue = this.{fieldName};
                     this.{fieldName} = value;
-                    this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof({propertyName})));
-                    On{propertyName}Changed(oldValue, value);
+                    this.NotifyOfPropertyChange(nameof({propertyName}));");
+
+            var affectedPropertiesProperty = attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == "AffectedProperties").Value;
+            if (!affectedPropertiesProperty.IsNull) {
+                foreach (var affectedProperty in affectedPropertiesProperty.Values) {
+                    var affectedPropertyName = affectedProperty.Value!.ToString();
+                    source.AppendLine($@"                    this.NotifyOfPropertyChange(nameof({affectedPropertyName}));");
+                }
+            }
+
+            source.Append($@"                    On{propertyName}Changed(oldValue, value);
                 }}
             }}
         }}
