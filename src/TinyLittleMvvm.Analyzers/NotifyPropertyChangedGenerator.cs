@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace TinyLittleMvvm.Analyzers {
     [Generator]
@@ -12,6 +12,13 @@ namespace TinyLittleMvvm.Analyzers {
         private static readonly DiagnosticDescriptor DoesNotDeriveFromPropertyChangedBaseError = new(id: "TLM001",
             title: "Must implement base class",
             messageFormat: "AutoNotify is disabled for class '{0}' because it does not derive from '{1}'",
+            category: "TinyLittleMvvm",
+            DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
+
+        private static readonly DiagnosticDescriptor NestedClassesNotAllowedError = new(id: "TLM002",
+            title: "Nested classes are not supported",
+            messageFormat: "AutoNotify is applied to a field of the nested class '{0}', which is not supported",
             category: "TinyLittleMvvm",
             DiagnosticSeverity.Error,
             isEnabledByDefault: true);
@@ -68,7 +75,12 @@ namespace TinyLittleMvvm
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
-                return null; //TODO: issue a diagnostic that it must be top level
+                context.ReportDiagnostic(Diagnostic.Create(
+                    NestedClassesNotAllowedError,
+                    attributeSymbol.Locations.FirstOrDefault(),
+                    classSymbol.ToDisplayString()));
+
+                return null;
             }
 
             var baseType = classSymbol.BaseType;
@@ -80,8 +92,12 @@ namespace TinyLittleMvvm
             }
             if (!ok)
             {
-                context.ReportDiagnostic(Diagnostic.Create(DoesNotDeriveFromPropertyChangedBaseError, classSymbol.Locations.FirstOrDefault(), classSymbol.ToDisplayString(), notifySymbol.ToDisplayString()));
-                return null; // TODO issue a diagnostic that it must inherit from TinyLittleMvvm.PropertyChangedBase
+                context.ReportDiagnostic(Diagnostic.Create(
+                    DoesNotDeriveFromPropertyChangedBaseError,
+                    attributeSymbol.Locations.FirstOrDefault(),
+                    classSymbol.ToDisplayString(), notifySymbol.ToDisplayString()));
+
+                return null;
             }
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
@@ -90,7 +106,7 @@ namespace TinyLittleMvvm
             var source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    public partial class {classSymbol.Name}
+    public partial class {classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}
     {{
 ");
 
@@ -150,7 +166,7 @@ namespace {namespaceName}
             }}
         }}
         
-        partial void On{propertyName}Changed({fieldType} oldValue, {fieldType} newValue);
+        partial void On{propertyName}Changed({fieldType} old{propertyName}, {fieldType} new{propertyName});
 ");
 
         }
