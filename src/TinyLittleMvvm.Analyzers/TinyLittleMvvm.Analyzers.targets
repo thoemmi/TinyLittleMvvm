@@ -4,6 +4,6 @@
       Enable Source Generators for .NET Core 5 WPF applications. Starting with .NET Core 6, this property will be true by default.
       See https://github.com/dotnet/sdk/issues/15395 for more information
     -->
-    <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)'==''">true</IncludePackageReferencesDuringMarkupCompilation>
+    <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)'=='' and '$(BundledNETCoreAppTargetFrameworkVersion)'=='5.0'">true</IncludePackageReferencesDuringMarkupCompilation>
   </PropertyGroup>
 </Project>
