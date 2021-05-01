@@ -71,7 +71,7 @@ namespace TinyLittleMvvm
             }
         }
 
-        private string? ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IFieldSymbol> fields, ISymbol attributeSymbol, INamedTypeSymbol notifySymbol, GeneratorExecutionContext context)
+        private string? ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IFieldSymbol> fields, ISymbol attributeSymbol, INamedTypeSymbol propertyChangedBaseSymbol, GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
@@ -87,7 +87,7 @@ namespace TinyLittleMvvm
             var ok = false;
             while (baseType != null)
             {
-                ok |= SymbolEqualityComparer.Default.Equals(baseType, notifySymbol);
+                ok |= SymbolEqualityComparer.Default.Equals(baseType, propertyChangedBaseSymbol);
                 baseType = baseType.BaseType;
             }
             if (!ok)
@@ -95,7 +95,7 @@ namespace TinyLittleMvvm
                 context.ReportDiagnostic(Diagnostic.Create(
                     DoesNotDeriveFromPropertyChangedBaseError,
                     attributeSymbol.Locations.FirstOrDefault(),
-                    classSymbol.ToDisplayString(), notifySymbol.ToDisplayString()));
+                    classSymbol.ToDisplayString(), propertyChangedBaseSymbol.ToDisplayString()));
 
                 return null;
             }
@@ -170,6 +170,7 @@ namespace {namespaceName}
 ");
 
         }
+
         private static string GetPropertyName(string fieldName, TypedConstant optionalNameOverride)
         {
             if (!optionalNameOverride.IsNull)
