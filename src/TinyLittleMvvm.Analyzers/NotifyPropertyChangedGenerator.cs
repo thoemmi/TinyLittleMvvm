@@ -166,7 +166,9 @@ namespace {namespaceName}
             }}
         }}
         
+#pragma warning disable IDE0060 // Remove unused parameter
         partial void On{propertyName}Changed({fieldType} old{propertyName}, {fieldType} new{propertyName});
+#pragma warning restore IDE0060 // Remove unused parameter
 ");
 
         }
