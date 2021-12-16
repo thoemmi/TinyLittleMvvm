@@ -106,7 +106,7 @@ namespace TinyLittleMvvm {
 
             if (viewModel is IOnClosingHandler onClosingHandler) {
                 if (view is Window window) {
-                    void OnClosingEvent(object sender, CancelEventArgs args) {
+                    void OnClosingEvent(object? sender, CancelEventArgs args) {
                         window.Closing -= OnClosingEvent;
                         onClosingHandler.OnClosing();
                     }
@@ -127,7 +127,7 @@ namespace TinyLittleMvvm {
                     throw new ArgumentException("If a view model implements ICancelableOnClosingHandler, the corresponding view must be a window.");
                 }
 
-                void OnClosingEvent(object sender, CancelEventArgs args) {
+                void OnClosingEvent(object? sender, CancelEventArgs args) {
                     args.Cancel = cancelableOnClosingHandler.OnClosing();
                 }
 
